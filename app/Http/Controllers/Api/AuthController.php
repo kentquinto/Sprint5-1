@@ -19,10 +19,9 @@ class AuthController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-        $user  = User::create($request->only(['name', 'email', 'password']));
-        $token = $user->createToken('auth_token')->accessToken;
+        $user = User::create($request->only(['name', 'email', 'password']));
 
-        return response()->json(['message' => 'User registered successfully', 'token' => $token], 201);
+        return response()->json(['message' => 'User registered successfully', 'token' => $this->issueToken($user)], 201);
     }
 
     public function login(Request $request): JsonResponse
@@ -38,9 +37,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
-        $token = $user->createToken('auth_token')->accessToken;
-
-        return response()->json(['message' => 'Logged in successfully', 'token' => $token]);
+        return response()->json(['message' => 'Logged in successfully', 'token' => $this->issueToken($user)]);
     }
 
     public function me(Request $request): UserResource
@@ -66,5 +63,10 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
 
         return response()->json(['message' => 'Logged out successfully']);
+    }
+
+    private function issueToken(User $user): string
+    {
+        return $user->createToken('api')->accessToken;
     }
 }

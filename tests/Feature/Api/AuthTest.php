@@ -1,10 +1,6 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
-
-uses(RefreshDatabase::class);
 
 it('registers a new user successfully', function () {
     $response = $this->postJson('/api/register', [
@@ -17,7 +13,7 @@ it('registers a new user successfully', function () {
     $response->assertStatus(201)
              ->assertJsonStructure(['message', 'token']);
 
-    expect(DB::table('users')->where('email', 'user1@example.com')->exists())->toBeTrue();
+    $this->assertDatabaseHas('users', ['email' => 'user1@example.com']);
 });
 
 it('validates email is required on registration', function () {
@@ -122,7 +118,7 @@ it('updates user profile with PUT /api/me', function () {
     $response->assertStatus(200)
              ->assertJson(['name' => 'newname', 'bio' => 'newbio', 'country' => 'ES']);
 
-    expect(DB::table('users')->where(['id' => $user->id, 'name' => 'newname'])->exists())->toBeTrue();
+    $this->assertDatabaseHas('users', ['id' => $user->id, 'name' => 'newname']);
 });
 
 it('requires authentication to update profile', function () {
