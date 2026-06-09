@@ -18,7 +18,7 @@ class EventResource extends JsonResource
             'max_players'        => $this->max_players,
             'date_time'          => $this->date_time,
             'status'             => $this->status,
-            'participants_count' => $this->participants()->count(),
+            'participants_count' => $this->participants_count,
             'game'               => [
                 'id'   => $this->game->id,
                 'name' => $this->game->name,

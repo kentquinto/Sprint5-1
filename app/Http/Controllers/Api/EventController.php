@@ -13,6 +13,7 @@ class EventController extends Controller
     public function index(Request $request): AnonymousResourceCollection
     {
         $events = Event::with('game', 'creator')
+            ->withCount('participants')
             ->when($request->game,     fn($q) => $q->where('game_id', $request->game))
             ->when($request->search,   fn($q) => $q->where('title', 'like', "%{$request->search}%"))
             ->when($request->location, fn($q) => $q->where('location', 'like', "%{$request->location}%"))
@@ -28,7 +29,7 @@ class EventController extends Controller
 
     public function show(Event $event): EventResource
     {
-        $event->load('game', 'creator');
+        $event->load('game', 'creator')->loadCount('participants');
 
         return new EventResource($event);
     }
