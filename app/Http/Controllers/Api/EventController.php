@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class EventController extends Controller
 {
@@ -27,10 +29,58 @@ class EventController extends Controller
         return EventResource::collection($events);
     }
 
+    public function store(Request $request): JsonResponse
+    {
+        $request->validate($this->eventRules());
+
+        $event = Event::create([
+            ...$request->only(['title', 'description', 'location', 'date_time', 'max_players', 'entry_fee', 'game_id']),
+            'creator_id' => $request->user()->id,
+            'status'     => 'upcoming',
+        ]);
+
+        return (new EventResource($this->loadEvent($event)))->response()->setStatusCode(201);
+    }
+
+    public function update(Request $request, Event $event): EventResource
+    {
+        $this->authorize('update', $event);
+
+        $request->validate($this->eventRules());
+
+        $event->update($request->only(['title', 'description', 'location', 'date_time', 'max_players', 'entry_fee', 'game_id']));
+
+        return new EventResource($this->loadEvent($event));
+    }
+
+    public function destroy(Event $event): Response
+    {
+        $this->authorize('delete', $event);
+        $event->delete();
+
+        return response()->noContent();
+    }
+
     public function show(Event $event): EventResource
     {
-        $event->load('game', 'creator')->loadCount('participants');
+        return new EventResource($this->loadEvent($event));
+    }
 
-        return new EventResource($event);
+    private function eventRules(): array
+    {
+        return [
+            'title'       => 'required|string|max:45',
+            'description' => 'required|string|max:2000',
+            'location'    => 'nullable|string|max:45',
+            'date_time'   => 'required|date|after:now',
+            'max_players' => 'required|integer|min:2|max:100',
+            'entry_fee'   => 'required|numeric|min:0|max:999.99',
+            'game_id'     => 'required|exists:games,id',
+        ];
+    }
+
+    private function loadEvent(Event $event): Event
+    {
+        return $event->load('game', 'creator')->loadCount('participants');
     }
 }
