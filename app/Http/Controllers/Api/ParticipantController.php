@@ -20,16 +20,17 @@ class ParticipantController extends Controller
     public function store(Request $request, Event $event): JsonResponse
     {
         $user = $request->user();
+        $event->load('participants');
 
         if ($event->creator_id === $user->id) {
             return response()->json(['message' => 'You cannot join your own event.'], 403);
         }
 
-        if ($event->participants()->where('user_id', $user->id)->exists()) {
+        if ($event->participants->contains('id', $user->id)) {
             return response()->json(['message' => 'You have already joined this event.'], 422);
         }
 
-        if ($event->participants()->count() >= $event->max_players) {
+        if ($event->participants->count() >= $event->max_players) {
             return response()->json(['message' => 'This event is at full capacity.'], 422);
         }
 
