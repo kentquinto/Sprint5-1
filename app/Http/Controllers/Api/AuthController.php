@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\EventResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -63,6 +65,30 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
 
         return response()->json(['message' => 'Logged out successfully']);
+    }
+
+    public function organizedEvents(Request $request): AnonymousResourceCollection
+    {
+        $events = $request->user()
+            ->createdEvents()
+            ->with('game', 'creator')
+            ->withCount('participants')
+            ->latest()
+            ->get();
+
+        return EventResource::collection($events);
+    }
+
+    public function joinedEvents(Request $request): AnonymousResourceCollection
+    {
+        $events = $request->user()
+            ->participatingEvents()
+            ->with('game', 'creator')
+            ->withCount('participants')
+            ->latest()
+            ->get();
+
+        return EventResource::collection($events);
     }
 
     private function issueToken(User $user): string
