@@ -13,7 +13,7 @@ beforeEach(function () {
 
 // ─── HELPER ──────────────────────────────────────────────────────────────────
 
-function makeEvent(User $creator, Game $game, array $overrides = []): Event
+function makeDashboardEvent(User $creator, Game $game, array $overrides = []): Event
 {
     return Event::create(array_merge([
         'title'       => 'Test Tournament',
@@ -31,8 +31,8 @@ function makeEvent(User $creator, Game $game, array $overrides = []): Event
 // ─── ORGANIZED EVENTS ────────────────────────────────────────────────────────
 
 it('returns events organized by the authenticated user', function () {
-    makeEvent($this->user, $this->game);
-    makeEvent($this->user, $this->game, ['title' => 'Second Tournament']);
+    makeDashboardEvent($this->user, $this->game);
+    makeDashboardEvent($this->user, $this->game, ['title' => 'Second Tournament']);
 
     $response = $this->getJson('/api/me/organized-events', [
         'Authorization' => "Bearer {$this->token}",
@@ -50,7 +50,7 @@ it('requires authentication to view organized events', function () {
 });
 
 it('organized events only shows the authenticated user\'s own events', function () {
-    makeEvent($this->other, $this->game);
+    makeDashboardEvent($this->other, $this->game);
 
     $response = $this->getJson('/api/me/organized-events', [
         'Authorization' => "Bearer {$this->token}",
@@ -63,8 +63,8 @@ it('organized events only shows the authenticated user\'s own events', function 
 // ─── JOINED EVENTS ───────────────────────────────────────────────────────────
 
 it('returns events the authenticated user has joined', function () {
-    $event1 = makeEvent($this->other, $this->game);
-    $event2 = makeEvent($this->other, $this->game, ['title' => 'Second Tournament']);
+    $event1 = makeDashboardEvent($this->other, $this->game);
+    $event2 = makeDashboardEvent($this->other, $this->game, ['title' => 'Second Tournament']);
     $event1->participants()->attach($this->user->id);
     $event2->participants()->attach($this->user->id);
 
@@ -84,7 +84,7 @@ it('requires authentication to view joined events', function () {
 });
 
 it('joined events only shows events the authenticated user joined', function () {
-    $event = makeEvent($this->other, $this->game);
+    $event = makeDashboardEvent($this->other, $this->game);
     $event->participants()->attach($this->other->id);
 
     $response = $this->getJson('/api/me/joined-events', [
