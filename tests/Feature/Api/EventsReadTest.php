@@ -29,8 +29,8 @@ it('returns all events', function () {
     $response = $this->getJson('/api/events');
 
     $response->assertStatus(200)
-             ->assertJsonCount(2)
-             ->assertJsonStructure([['id', 'title', 'description', 'location', 'entry_fee', 'max_players', 'date_time', 'status', 'game', 'creator']]);
+             ->assertJsonCount(2, 'data')
+             ->assertJsonStructure(['data' => [['id', 'title', 'description', 'location', 'entry_fee', 'max_players', 'date_time', 'status', 'game', 'creator']]]);
 });
 
 it('returns event details with GET /api/events/{id}', function () {
@@ -57,7 +57,7 @@ it('filters events by game', function () {
 
     $response = $this->getJson("/api/events?game={$this->game->id}");
 
-    $response->assertStatus(200)->assertJsonCount(1);
+    $response->assertStatus(200)->assertJsonCount(1, 'data');
 });
 
 it('filters events by status', function () {
@@ -66,7 +66,7 @@ it('filters events by status', function () {
 
     $response = $this->getJson('/api/events?status=upcoming');
 
-    $response->assertStatus(200)->assertJsonCount(1);
+    $response->assertStatus(200)->assertJsonCount(1, 'data');
 });
 
 it('filters events by price free', function () {
@@ -75,7 +75,7 @@ it('filters events by price free', function () {
 
     $response = $this->getJson('/api/events?price=free');
 
-    $response->assertStatus(200)->assertJsonCount(1);
+    $response->assertStatus(200)->assertJsonCount(1, 'data');
 });
 
 it('filters events by search term in title', function () {
@@ -84,7 +84,7 @@ it('filters events by search term in title', function () {
 
     $response = $this->getJson('/api/events?search=Pokemon');
 
-    $response->assertStatus(200)->assertJsonCount(1);
+    $response->assertStatus(200)->assertJsonCount(1, 'data');
 });
 
 it('filters events by location', function () {
@@ -93,7 +93,7 @@ it('filters events by location', function () {
 
     $response = $this->getJson('/api/events?location=Barcelona');
 
-    $response->assertStatus(200)->assertJsonCount(1);
+    $response->assertStatus(200)->assertJsonCount(1, 'data');
 });
 
 it('events list is publicly accessible without authentication', function () {

@@ -24,7 +24,7 @@ class EventController extends Controller
             ->when($request->price === 'paid', fn($q) => $q->where('entry_fee', '>', 0))
             ->when($request->date,     fn($q) => $q->whereDate('date_time', $request->date))
             ->latest()
-            ->get();
+            ->paginate(20);
 
         return EventResource::collection($events);
     }
