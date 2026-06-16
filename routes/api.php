@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GameController;
 use App\Http\Controllers\Api\ParticipantController;
@@ -27,8 +28,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/me',                          [AuthController::class,       'me']);
     Route::put('/me',                          [AuthController::class,       'update']);
     Route::post('/logout',                     [AuthController::class,       'logout']);
-    Route::get('/me/organized-events',         [AuthController::class,       'organizedEvents']);
-    Route::get('/me/joined-events',            [AuthController::class,       'joinedEvents']);
+    Route::get('/me/organized-events',         [DashboardController::class,  'organizedEvents']);
+    Route::get('/me/joined-events',            [DashboardController::class,  'joinedEvents']);
 
     Route::post('/events',                     [EventController::class,      'store']);
     Route::put('/events/{event}',              [EventController::class,      'update']);
