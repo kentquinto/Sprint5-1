@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\GameResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,9 +16,7 @@ class UserResource extends JsonResource
             'email'         => $this->email,
             'bio'           => $this->bio,
             'country'       => $this->country,
-            'favorite_game' => $this->favoriteGame
-                                   ? ['id' => $this->favoriteGame->id, 'name' => $this->favoriteGame->name]
-                                   : null,
+            'favorite_game' => GameResource::make($this->whenLoaded('favoriteGame')),
         ];
     }
 }
