@@ -42,20 +42,21 @@ class AuthController extends Controller
 
     public function me(Request $request): UserResource
     {
-        return new UserResource($request->user());
+        return new UserResource($request->user()->load('favoriteGame'));
     }
 
     public function update(Request $request): UserResource
     {
         $request->validate([
-            'name'    => 'sometimes|string|max:255',
-            'bio'     => 'sometimes|nullable|string',
-            'country' => 'sometimes|nullable|string|max:10',
+            'name'             => 'sometimes|string|max:255',
+            'bio'              => 'sometimes|nullable|string',
+            'country'          => 'sometimes|nullable|string|max:10',
+            'favorite_game_id' => 'sometimes|nullable|exists:games,id',
         ]);
 
-        $request->user()->update($request->only(['name', 'bio', 'country']));
+        $request->user()->update($request->only(['name', 'bio', 'country', 'favorite_game_id']));
 
-        return new UserResource($request->user()->fresh());
+        return new UserResource($request->user()->fresh()->load('favoriteGame'));
     }
 
     public function logout(Request $request): JsonResponse
