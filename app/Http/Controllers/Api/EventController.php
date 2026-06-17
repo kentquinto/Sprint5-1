@@ -14,6 +14,15 @@ class EventController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
+        $request->validate([
+            'game'     => 'sometimes|integer|exists:games,id',
+            'status'   => 'sometimes|in:upcoming,ongoing,finished,cancelled',
+            'price'    => 'sometimes|in:free,paid',
+            'date'     => 'sometimes|date',
+            'search'   => 'sometimes|string|max:100',
+            'location' => 'sometimes|string|max:100',
+        ]);
+
         $events = Event::with('game', 'creator')
             ->withCount('participants')
             ->when($request->game,     fn($q) => $q->where('game_id', $request->game))
