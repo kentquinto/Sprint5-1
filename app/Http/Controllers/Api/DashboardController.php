@@ -16,7 +16,7 @@ class DashboardController extends Controller
             ->with('game', 'creator')
             ->withCount('participants')
             ->latest()
-            ->get();
+            ->paginate(20);
 
         return EventResource::collection($events);
     }
@@ -28,7 +28,7 @@ class DashboardController extends Controller
             ->with('game', 'creator')
             ->withCount('participants')
             ->latest()
-            ->get();
+            ->paginate(20);
 
         return EventResource::collection($events);
     }
