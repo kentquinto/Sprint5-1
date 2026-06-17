@@ -22,6 +22,10 @@ class ParticipantController extends Controller
         $user = $request->user();
         $event->load('participants');
 
+        if (in_array($event->status, ['finished', 'cancelled'])) {
+            return response()->json(['message' => 'This event is no longer accepting participants.'], 422);
+        }
+
         if ($event->creator_id === $user->id) {
             return response()->json(['message' => 'You cannot join your own event.'], 403);
         }
@@ -34,21 +38,17 @@ class ParticipantController extends Controller
             return response()->json(['message' => 'This event is at full capacity.'], 422);
         }
 
-        if (in_array($event->status, ['finished', 'cancelled'])) {
-            return response()->json(['message' => 'This event is no longer accepting participants.'], 422);
-        }
-
         $event->participants()->attach($user->id);
 
         return response()->json(new ParticipantResource($user), 201);
     }
 
-    public function destroy(Request $request, Event $event): Response
+    public function destroy(Request $request, Event $event): JsonResponse|Response
     {
         $user = $request->user();
 
         if (! $event->participants()->where('user_id', $user->id)->exists()) {
-            abort(403, 'You are not a participant of this event.');
+            return response()->json(['message' => 'You are not a participant of this event.'], 403);
         }
 
         $event->participants()->detach($user->id);
