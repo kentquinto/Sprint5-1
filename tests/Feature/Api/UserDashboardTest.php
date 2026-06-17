@@ -39,8 +39,8 @@ it('returns events organized by the authenticated user', function () {
     ]);
 
     $response->assertStatus(200)
-             ->assertJsonCount(2)
-             ->assertJsonStructure([['id', 'title', 'status', 'date_time']]);
+             ->assertJsonCount(2, 'data')
+             ->assertJsonStructure(['data' => [['id', 'title', 'status', 'date_time']]]);
 });
 
 it('requires authentication to view organized events', function () {
@@ -57,7 +57,7 @@ it('organized events only shows the authenticated user\'s own events', function 
     ]);
 
     $response->assertStatus(200)
-             ->assertJsonCount(0);
+             ->assertJsonCount(0, 'data');
 });
 
 // ─── JOINED EVENTS ───────────────────────────────────────────────────────────
@@ -73,8 +73,8 @@ it('returns events the authenticated user has joined', function () {
     ]);
 
     $response->assertStatus(200)
-             ->assertJsonCount(2)
-             ->assertJsonStructure([['id', 'title', 'status', 'date_time']]);
+             ->assertJsonCount(2, 'data')
+             ->assertJsonStructure(['data' => [['id', 'title', 'status', 'date_time']]]);
 });
 
 it('requires authentication to view joined events', function () {
@@ -92,5 +92,5 @@ it('joined events only shows events the authenticated user joined', function () 
     ]);
 
     $response->assertStatus(200)
-             ->assertJsonCount(0);
+             ->assertJsonCount(0, 'data');
 });
