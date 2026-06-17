@@ -14,6 +14,15 @@ class EventController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
+        $request->validate([
+            'game'     => 'sometimes|integer|exists:games,id',
+            'status'   => 'sometimes|in:upcoming,ongoing,finished,cancelled',
+            'price'    => 'sometimes|in:free,paid',
+            'date'     => 'sometimes|date',
+            'search'   => 'sometimes|string|max:100',
+            'location' => 'sometimes|string|max:100',
+        ]);
+
         $events = Event::with('game', 'creator')
             ->withCount('participants')
             ->when($request->game,     fn($q) => $q->where('game_id', $request->game))
@@ -24,7 +33,7 @@ class EventController extends Controller
             ->when($request->price === 'paid', fn($q) => $q->where('entry_fee', '>', 0))
             ->when($request->date,     fn($q) => $q->whereDate('date_time', $request->date))
             ->latest()
-            ->get();
+            ->paginate(20);
 
         return EventResource::collection($events);
     }

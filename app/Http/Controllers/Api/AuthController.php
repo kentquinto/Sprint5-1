@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\EventResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -16,9 +14,9 @@ class AuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $request->validate([
-            'name'     => 'required|string|max:255',
+            'name'     => 'required|string|min:2|max:255',
             'email'    => 'required|email|unique:users',
-            'password' => 'required|confirmed',
+            'password' => 'required|confirmed|min:8',
         ]);
 
         $user = User::create($request->only(['name', 'email', 'password']));
@@ -44,20 +42,21 @@ class AuthController extends Controller
 
     public function me(Request $request): UserResource
     {
-        return new UserResource($request->user());
+        return new UserResource($request->user()->load('favoriteGame'));
     }
 
     public function update(Request $request): UserResource
     {
         $request->validate([
-            'name'    => 'sometimes|string|max:255',
-            'bio'     => 'sometimes|nullable|string',
-            'country' => 'sometimes|nullable|string|max:10',
+            'name'             => 'sometimes|string|max:255',
+            'bio'              => 'sometimes|nullable|string',
+            'country'          => 'sometimes|nullable|string|max:10',
+            'favorite_game_id' => 'sometimes|nullable|exists:games,id',
         ]);
 
-        $request->user()->update($request->only(['name', 'bio', 'country']));
+        $request->user()->update($request->only(['name', 'bio', 'country', 'favorite_game_id']));
 
-        return new UserResource($request->user()->fresh());
+        return new UserResource($request->user()->fresh()->load('favoriteGame'));
     }
 
     public function logout(Request $request): JsonResponse
@@ -65,30 +64,6 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
 
         return response()->json(['message' => 'Logged out successfully']);
-    }
-
-    public function organizedEvents(Request $request): AnonymousResourceCollection
-    {
-        $events = $request->user()
-            ->createdEvents()
-            ->with('game', 'creator')
-            ->withCount('participants')
-            ->latest()
-            ->get();
-
-        return EventResource::collection($events);
-    }
-
-    public function joinedEvents(Request $request): AnonymousResourceCollection
-    {
-        $events = $request->user()
-            ->participatingEvents()
-            ->with('game', 'creator')
-            ->withCount('participants')
-            ->latest()
-            ->get();
-
-        return EventResource::collection($events);
     }
 
     private function issueToken(User $user): string

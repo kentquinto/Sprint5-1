@@ -14,11 +14,11 @@ class EventResource extends JsonResource
             'title'              => $this->title,
             'description'        => $this->description,
             'location'           => $this->location,
-            'entry_fee'          => $this->entry_fee,
+            'entry_fee'          => (float) $this->entry_fee,
             'max_players'        => $this->max_players,
             'date_time'          => $this->date_time,
             'status'             => $this->status,
-            'participants_count' => $this->participants_count,
+            'participants_count' => $this->participants_count ?? 0,
             'game'               => [
                 'id'   => $this->game->id,
                 'name' => $this->game->name,

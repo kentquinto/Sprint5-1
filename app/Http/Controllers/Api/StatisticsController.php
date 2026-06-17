@@ -12,7 +12,9 @@ class StatisticsController extends Controller
     public function players(): JsonResponse
     {
         $players = User::withCount('participatingEvents')
+            ->whereHas('participatingEvents')
             ->orderByDesc('participating_events_count')
+            ->limit(10)
             ->get()
             ->map(fn($u) => [
                 'id'                  => $u->id,
@@ -40,7 +42,9 @@ class StatisticsController extends Controller
     public function organizers(): JsonResponse
     {
         $organizers = User::withCount('createdEvents')
+            ->whereHas('createdEvents')
             ->orderByDesc('created_events_count')
+            ->limit(10)
             ->get()
             ->map(fn($u) => [
                 'id'                     => $u->id,
