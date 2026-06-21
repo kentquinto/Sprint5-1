@@ -1,240 +1,353 @@
-<h1 align="center">🃏 TCG Manager</h1>
+<h1 align="center">🃏 TCG Manager — REST API</h1>
 
 <p align="center">
-  A full-stack tournament management web app for Trading Card Game players and organizers.
-  <br />
-  Built with Laravel 11, Tailwind CSS, and MySQL.
+  A RESTful API for organizing and discovering Trading Card Game tournaments.<br/>
+  Built with Laravel 13, tested with Pest, and documented with Scribe.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Laravel-11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 11">
-  <img src="https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.2">
-  <img src="https://img.shields.io/badge/TailwindCSS-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
-  <img src="https://img.shields.io/badge/MySQL-8-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/Laravel-13-FF2D20?style=for-the-badge&logo=laravel&logoColor=white">
+  <img src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php&logoColor=white">
+  <img src="https://img.shields.io/badge/Passport-13-orange?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Tests-86%20passing-brightgreen?style=for-the-badge">
 </p>
 
 ---
 
-## 📸 Screenshots
+## What is this?
 
-<table>
-  <tr>
-    <td align="center"><strong>🏠 Home</strong></td>
-    <td align="center"><strong>📋 Events Index</strong></td>
-  </tr>
-  <tr>
-    <td><img src="screenshots/Screenshot%202026-05-29%20at%2011.16.28.png" alt="Home Page"></td>
-    <td><img src="screenshots/Screenshot%202026-05-29%20at%2011.17.15.png" alt="Events Index"></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>🎴 Event Detail</strong></td>
-    <td align="center"><strong>📊 Dashboard</strong></td>
-  </tr>
-  <tr>
-    <td><img src="screenshots/Screenshot%202026-05-29%20at%2011.17.48.png" alt="Event Detail"></td>
-    <td><img src="screenshots/Screenshot%202026-05-29%20at%2011.18.14.png" alt="Dashboard"></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>👤 Public Profile</strong></td>
-    <td align="center"><strong>⚙️ Profile Settings</strong></td>
-  </tr>
-  <tr>
-    <td><img src="screenshots/Screenshot%202026-05-29%20at%2011.20.32.png" alt="Public Profile"></td>
-    <td><img src="screenshots/Screenshot%202026-05-29%20at%2011.18.30.png" alt="Profile Settings"></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>➕ Create Event</strong></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><img src="screenshots/Screenshot%202026-05-29%20at%2011.18.47.png" alt="Create Event"></td>
-    <td></td>
-  </tr>
-</table>
+TCG Manager is a backend REST API that lets players register accounts, browse tournaments, and join events across 13 supported Trading Card Games. Organizers can create and manage their own events with full authorization control.
+
+This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed using **TDD** (Test-Driven Development) — every endpoint has tests written before implementation.
 
 ---
 
-## 🧩 What is TCG Manager?
+## Features
 
-TCG Manager is a web application where players can **discover, create, and join Trading Card Game tournaments**. Whether you're a Yu-Gi-Oh! duelist, a Pokémon trainer, or a Magic: The Gathering planeswalker — there's a place for you here.
-
-Organizers can create and manage events. Players can browse, filter, and join. Everyone gets a profile. No extra tools needed — just show up and play.
-
----
-
-## ✨ Features
-
-### For Players
-- 🔍 **Browse Events** — Search by title, filter by game, date, price, or status
-- 🎮 **Game-Themed Cards** — Each TCG has its own banner image and color scheme
-- 📋 **Event Detail Pages** — Full info: location, date, entry fee, player count, participants list
-- ✅ **Join & Leave Events** — One click to register or withdraw
-- 👤 **Public Profiles** — View any player's bio, country, favorite game, created events, and events they've joined
-
-### For Organizers
-- ➕ **Create Events** — Set title, description, location, date/time, entry fee, max players, and game
-- ✏️ **Edit & Delete** — Full control over events you created
-- 📊 **Dashboard** — See all events you've created and all events you're participating in at a glance
-
-### Platform
-- 🔐 **Authentication** — Register, login, logout via Laravel Breeze
-- 📧 **Email Verification** — Dashboard access requires a verified email
-- 🛡️ **Policy-Based Authorization** — Only creators can edit or delete their own events
-- 🚫 **Smart Guard Checks** — Can't join your own event, can't join a full event, can't join a finished or cancelled event
-- 📄 **Pagination** — Events index paginates with query string preservation
-- ⚡ **Flash Messages** — Instant success and error feedback after every action
+- **Bearer token authentication** via Laravel Passport (register, login, logout)
+- **Event management** — create, update, delete and browse tournaments
+- **Smart filtering** — filter events by game, status, price, date, location or search term
+- **Participant system** — join and leave events with full business rule enforcement
+- **Public player profiles** — bio, country, favourite game and event statistics
+- **Personal dashboard** — your organized events and events you've joined
+- **Leaderboards** — top players, top organizers and most popular games
+- **Interactive API docs** — Try It Out, Postman collection and OpenAPI spec via Scribe
+- **Pagination** — all list endpoints return paginated responses with metadata
 
 ---
 
-## 🎴 Supported Games
-
-| Game | Game | Game |
-|---|---|---|
-| Yu-Gi-Oh! | Pokémon | Magic: The Gathering |
-| One Piece | Dragon Ball Super | Disney Lorcana |
-| Star Wars: Unlimited | Final Fantasy TCG | Flesh and Blood |
-| Digimon Card Game | League of Legends Riftbound | Gundam Card Game |
-| Altered | | |
-
-Each game has its own **banner image**, **badge color**, and **accent theme** applied across the event cards and detail pages.
-
----
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Backend Framework | Laravel 11 |
-| Authentication | Laravel Breeze |
-| Database | MySQL |
-| ORM | Eloquent |
-| Frontend Styling | Tailwind CSS 3 |
-| Asset Bundling | Vite |
-| Templating | Blade |
-| Authorization | Laravel Policies |
+| Framework | Laravel 13 |
+| Language | PHP 8.3+ |
+| Authentication | Laravel Passport 13 (OAuth2 Bearer tokens) |
+| Database | SQLite (local) · MySQL (production) |
+| Testing | Pest 4.7 — 86 tests, 252 assertions |
+| Documentation | Scribe 5.11 |
+| Architecture | REST, MVC, Repository-light, TDD |
 
 ---
 
-## ⚙️ Installation
+## Getting Started
 
-### Requirements
-- PHP 8.2+
+### Prerequisites
+
+- PHP 8.3+
 - Composer
-- Node.js & npm
-- MySQL
+- SQLite (built into PHP) or MySQL
 
-### Steps
+### 1 — Clone and install
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/tcg-manager.git
-cd tcg-manager
-
-# 2. Install PHP dependencies
+git clone https://github.com/kentquinto/TCGManager-API-REST.git
+cd TCGManager-API-REST
 composer install
+```
 
-# 3. Install JS dependencies
-npm install
+### 2 — Environment
 
-# 4. Copy the environment file and configure it
+```bash
 cp .env.example .env
-
-# 5. Generate the application key
 php artisan key:generate
 ```
 
-Edit `.env` and set your database credentials:
+Open `.env` and set:
 
 ```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=tcg_tournaments
-DB_USERNAME=root
-DB_PASSWORD=your_password
+APP_URL=http://localhost:8000
+
+# SQLite (default — no extra setup needed)
+DB_CONNECTION=sqlite
 ```
 
+> For **MySQL**, use:
+> ```env
+> DB_CONNECTION=mysql
+> DB_HOST=127.0.0.1
+> DB_PORT=3306
+> DB_DATABASE=tcgmanager
+> DB_USERNAME=root
+> DB_PASSWORD=your_password
+> ```
+
+### 3 — Database
+
 ```bash
-# 6. Run migrations and seed the database
-php artisan migrate:fresh --seed
+# Create the SQLite file (skip if using MySQL)
+touch database/database.sqlite
 
-# 7. Build frontend assets
-npm run dev
+# Run migrations
+php artisan migrate
 
-# 8. Start the development server
+# Install Passport (generates OAuth encryption keys)
+php artisan passport:install
+
+# Seed: 13 games + sample users, events and participants
+php artisan db:seed
+```
+
+### 4 — Run
+
+```bash
 php artisan serve
 ```
 
-Visit `http://localhost:8000`
+| Resource | URL |
+|---|---|
+| API base | `http://localhost:8000/api` |
+| Interactive docs | `http://localhost:8000/docs` |
 
 ---
 
-## 🌱 Seeded Test Data
+## API Documentation
 
-Running `--seed` creates:
+After running the server, open **`http://localhost:8000/docs`** for full interactive documentation including:
 
-- **10 test users** (`tester1@test.com` through `tester10@test.com`) — password: `password`
-- **13 games** across all major TCGs
-- **13 events** covering all statuses: upcoming, ongoing, finished, cancelled
-- **Participants** distributed across events
+- **Try It Out** — send real requests directly from the browser
+- **Example requests** in `curl` and JavaScript
+- **Example responses** for every HTTP status code
+- **Postman collection** — `public/docs/collection.json`
+- **OpenAPI 3.0 spec** — `public/docs/openapi.yaml`
 
-Log in with any tester account to explore the full app immediately.
+To regenerate docs after code changes:
+
+```bash
+php artisan scribe:generate
+```
 
 ---
 
-## 🗂️ Project Structure
+## Endpoints
+
+### Authentication
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| `POST` | `/api/register` | Public | Create account — returns Bearer token |
+| `POST` | `/api/login` | Public | Log in — returns Bearer token |
+| `POST` | `/api/logout` | 🔒 | Revoke current token |
+
+### Profile
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| `GET` | `/api/me` | 🔒 | Get your own profile |
+| `PUT` | `/api/me` | 🔒 | Update name, bio, country, favourite game |
+
+### Events
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| `GET` | `/api/events` | Public | Paginated list with 6 filter options |
+| `GET` | `/api/events/{id}` | Public | Single event with full details |
+| `POST` | `/api/events` | 🔒 | Create an event |
+| `PUT` | `/api/events/{id}` | 🔒 | Update your event |
+| `DELETE` | `/api/events/{id}` | 🔒 | Delete your event |
+
+### Participants
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| `GET` | `/api/events/{id}/participants` | Public | List all participants of an event |
+| `POST` | `/api/events/{id}/participants` | 🔒 | Join an event |
+| `DELETE` | `/api/events/{id}/participants` | 🔒 | Leave an event |
+
+### Dashboard
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| `GET` | `/api/me/organized-events` | 🔒 | Events you have created |
+| `GET` | `/api/me/joined-events` | 🔒 | Events you have joined |
+
+### Players
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| `GET` | `/api/players/{id}` | Public | Public profile of any player |
+
+### Games & Statistics
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| `GET` | `/api/games` | Public | All 13 supported TCGs |
+| `GET` | `/api/stats/players` | Public | Top 10 players by events joined |
+| `GET` | `/api/stats/games` | Public | Games ranked by event count |
+| `GET` | `/api/stats/organizers` | Public | Top 10 organizers by events created |
+
+---
+
+## Authentication Flow
+
+All 🔒 endpoints require a Bearer token in the `Authorization` header.
+
+**Step 1 — Get a token:**
+
+```bash
+curl -X POST http://localhost:8000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "test@example.com", "password": "yourpassword"}'
+```
+
+```json
+{
+  "message": "Logged in successfully",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGci..."
+}
+```
+
+**Step 2 — Use it:**
+
+```bash
+curl http://localhost:8000/api/me \
+  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGci..."
+```
+
+**Step 3 — Log out (revokes the token permanently):**
+
+```bash
+curl -X POST http://localhost:8000/api/logout \
+  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGci..."
+```
+
+---
+
+## Event Filters
+
+`GET /api/events` accepts the following query parameters (all optional, combinable):
+
+| Parameter | Type | Example | Description |
+|---|---|---|---|
+| `game` | integer | `1` | Filter by game ID (see `/api/games`) |
+| `status` | string | `upcoming` | `upcoming` · `ongoing` · `finished` · `cancelled` |
+| `price` | string | `free` | `free` or `paid` |
+| `date` | string | `2026-12-01` | Events on a specific day (YYYY-MM-DD) |
+| `search` | string | `Pokémon` | Partial title match |
+| `location` | string | `Barcelona` | Partial location match |
+| `page` | integer | `2` | Page number (20 per page) |
+
+**Example:**
+```
+GET /api/events?game=1&status=upcoming&price=free
+```
+
+---
+
+## Business Rules
+
+These are enforced server-side — they cannot be bypassed:
+
+- You **cannot join your own event**
+- You **cannot join the same event twice**
+- You **cannot join a full event** (enforces `max_players`)
+- You **cannot join a finished or cancelled event**
+- Only the **event creator** can update or delete it (enforced via `EventPolicy`)
+
+---
+
+## HTTP Status Codes
+
+| Code | Meaning | When |
+|---|---|---|
+| `200` | OK | Request succeeded |
+| `201` | Created | Resource was created |
+| `204` | No Content | Deleted successfully (no body) |
+| `401` | Unauthenticated | Missing or invalid Bearer token |
+| `403` | Forbidden | Authenticated but not authorized |
+| `404` | Not Found | Resource does not exist |
+| `422` | Unprocessable | Validation failed — `errors` object included |
+
+---
+
+## Running Tests
+
+```bash
+php artisan test
+```
+
+```
+Tests:    86 passed
+Assertions: 252
+Duration:  ~1.5s
+```
+
+The test suite covers every endpoint including authentication, validation, authorization, business rule enforcement and edge cases. Written with **Pest 4.7** following TDD — tests were written before implementation.
+
+---
+
+## Project Structure
 
 ```
 app/
-├── Http/Controllers/
-│   ├── EventController.php        # CRUD for events + filters
-│   ├── ParticipantController.php  # Join / leave logic
-│   ├── DashboardController.php    # User dashboard
-│   └── ProfileController.php      # Profile view & edit
+├── Http/
+│   ├── Controllers/Api/
+│   │   ├── AuthController.php        # register, login, me, update, logout
+│   │   ├── EventController.php       # index, show, store, update, destroy
+│   │   ├── ParticipantController.php # index, store (join), destroy (leave)
+│   │   ├── DashboardController.php   # organizedEvents, joinedEvents
+│   │   ├── PlayerController.php      # show (public profile)
+│   │   ├── GameController.php        # index
+│   │   └── StatisticsController.php  # players, games, organizers
+│   └── Resources/
+│       ├── EventResource.php         # controls event JSON shape
+│       ├── UserResource.php          # private profile shape
+│       ├── PublicProfileResource.php # public profile shape
+│       └── ParticipantResource.php   # participant shape
 ├── Models/
-│   ├── Event.php                  # hasMany participants, belongsTo game/creator
-│   ├── User.php                   # belongsToMany events, hasMany createdEvents
-│   ├── Game.php                   # hasMany events
-│   └── Participant.php            # Pivot model for event_id + user_id
+│   ├── Event.php     # belongsTo Game, User · belongsToMany participants
+│   ├── User.php      # hasMany createdEvents · belongsToMany events
+│   └── Game.php      # hasMany events
 └── Policies/
-    └── EventPolicy.php            # update/delete restricted to creator
-
-config/
-└── game_colors.php                # Per-game color & banner image config
+    └── EventPolicy.php  # update/delete: only the creator
 
 database/
-├── migrations/                    # Schema for users, games, events, participants
-└── seeders/                       # GameSeeder, UserSeeder, EventSeeder
+├── migrations/   # users, games, events, participants (pivot)
+└── seeders/      # 13 games + sample data
 
-resources/views/
-├── layouts/                       # app.blade.php, navigation.blade.php
-├── events/                        # index, show, create, edit, _status_badge
-├── profile/                       # show, edit
-└── dashboard.blade.php
+routes/
+└── api.php       # 20 routes — public + auth:api protected group
+
+tests/Feature/Api/
+└── ...           # 86 Pest tests
 ```
 
 ---
 
-## 🔑 Key Technical Highlights
+## Supported TCGs
 
-- **Eager Loading** — All event queries use `with('game', 'creator', 'participants')` to eliminate N+1 queries
-- **Policy Authorization** — `EventPolicy` enforces that only the event creator can edit or delete
-- **Pivot Table** — The `participants` table handles the many-to-many relationship between users and events with a unique constraint to prevent duplicate joins
-- **Query Builder `when()`** — Filters in `EventController::index()` are applied conditionally using `when()`, keeping the query chain clean
-- **Carbon Casts** — `date_time` is cast to `datetime` on the Event model, eliminating `Carbon::parse()` calls in views
-- **Game Config** — All game-specific colors and banner images live in `config/game_colors.php`, keeping presentation data out of views and controllers
-- **Flash Messages** — Every write operation (create, update, delete, join, leave) returns a session flash message rendered in the layout
+Digimon · Dragon Ball Super · Flesh and Blood · KeyForge · Lorcana · Magic: The Gathering · MetaZoo · One Piece · Pokémon · Star Wars: Unlimited · Union Arena · Vanguard · Yu-Gi-Oh!
 
 ---
 
-## 👤 Author
+## Author
 
 **Kent Quinto**
 Full-Stack Web Development Student — IT Academy Barcelona
-Built as a Sprint 4 capstone project.
+Sprint 5 capstone project.
 
 ---
 
-## 📄 License
+## License
 
-This project is open source and available under the [MIT License](LICENSE).
+Open source under the [MIT License](LICENSE).
