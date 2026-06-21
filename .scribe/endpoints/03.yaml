@@ -1,0 +1,67 @@
+name: Players
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/players/{user_id}'
+    metadata:
+      custom: []
+      groupName: Players
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Get a player's public profile."
+      description: "Returns a player's public profile including their bio, country, favourite game and event statistics."
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      user_id:
+        custom: []
+        name: user_id
+        description: 'The ID of the player.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      user_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "name": "Player One",
+            "bio": "Pokémon TCG player since 2010.",
+            "country": "ES",
+            "favorite_game": { "id": 1, "name": "Pokémon" },
+            "organized_events_count": 5,
+            "joined_events_count": 12
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [App\\Models\\User] 99" }'
+        headers: []
+        description: 'User not found'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
