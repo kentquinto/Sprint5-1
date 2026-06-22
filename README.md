@@ -336,7 +336,7 @@ tests/Feature/Api/
 
 ## Supported TCGs
 
-Digimon · Dragon Ball Super · Flesh and Blood · KeyForge · Lorcana · Magic: The Gathering · MetaZoo · One Piece · Pokémon · Star Wars: Unlimited · Union Arena · Vanguard · Yu-Gi-Oh!
+Yu-Gi-Oh! · Pokémon · Magic: The Gathering · One Piece · League of Legends Riftbound · Disney Lorcana · Dragon Ball Super Card Game · Star Wars: Unlimited · Final Fantasy TCG · Flesh and Blood · Digimon Card Game · Gundam Card Game · Altered
 
 ---
 

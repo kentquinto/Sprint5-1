@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "TCG Manager API",
-        "_postman_id": "7e1697af-a79e-43fd-8b0c-d98d7c676db0",
+        "_postman_id": "4d1b99b9-19bf-4e01-8790-c66c69a3b829",
         "description": "REST API for TCG Manager \u2014 a tournament management platform for Trading Card Game players and organizers. Supports event discovery, creation, and participation across 13 supported games including Pok\u00e9mon, Yu-Gi-Oh!, Magic: The Gathering, and more.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -301,7 +301,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"game\":16,\"status\":\"cancelled\",\"price\":\"paid\",\"date\":\"2026-06-21T21:49:34\",\"search\":\"n\",\"location\":\"g\"}"
+                            "raw": "{\"game\":16,\"status\":\"ongoing\",\"price\":\"paid\",\"date\":\"2026-06-22T08:15:17\",\"search\":\"n\",\"location\":\"g\"}"
                         },
                         "description": "Returns a paginated list of all events (20 per page). Use the query parameters to filter the results.",
                         "auth": {
@@ -902,7 +902,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"data\": [\n    { \"id\": 3,  \"name\": \"Digimon\" },\n    { \"id\": 4,  \"name\": \"Dragon Ball Super\" },\n    { \"id\": 5,  \"name\": \"Flesh and Blood\" },\n    { \"id\": 6,  \"name\": \"KeyForge\" },\n    { \"id\": 7,  \"name\": \"Lorcana\" },\n    { \"id\": 8,  \"name\": \"Magic: The Gathering\" },\n    { \"id\": 9,  \"name\": \"MetaZoo\" },\n    { \"id\": 10, \"name\": \"One Piece\" },\n    { \"id\": 1,  \"name\": \"Pok\u00e9mon\" },\n    { \"id\": 11, \"name\": \"Star Wars: Unlimited\" },\n    { \"id\": 12, \"name\": \"Union Arena\" },\n    { \"id\": 13, \"name\": \"Vanguard\" },\n    { \"id\": 2,  \"name\": \"Yu-Gi-Oh!\" }\n  ]\n}",
+                            "body": "{\n  \"data\": [\n    { \"id\": 1,  \"name\": \"Yu-Gi-Oh!\" },\n    { \"id\": 2,  \"name\": \"Pok\u00e9mon\" },\n    { \"id\": 3,  \"name\": \"Magic: The Gathering\" },\n    { \"id\": 4,  \"name\": \"One Piece\" },\n    { \"id\": 5,  \"name\": \"League of Legends Riftbound\" },\n    { \"id\": 6,  \"name\": \"Disney Lorcana\" },\n    { \"id\": 7,  \"name\": \"Dragon Ball Super Card Game\" },\n    { \"id\": 8,  \"name\": \"Star Wars: Unlimited\" },\n    { \"id\": 9,  \"name\": \"Final Fantasy TCG\" },\n    { \"id\": 10, \"name\": \"Flesh and Blood\" },\n    { \"id\": 11, \"name\": \"Digimon Card Game\" },\n    { \"id\": 12, \"name\": \"Gundam Card Game\" },\n    { \"id\": 13, \"name\": \"Altered\" }\n  ]\n}",
                             "name": ""
                         }
                     ]
