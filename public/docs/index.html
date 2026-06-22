@@ -196,7 +196,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 21, 2026</li>
+        <li>Last updated: June 22, 2026</li>
     </ul>
 </div>
 
@@ -1127,9 +1127,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"game\": 16,
-    \"status\": \"cancelled\",
+    \"status\": \"ongoing\",
     \"price\": \"paid\",
-    \"date\": \"2026-06-21T21:49:34\",
+    \"date\": \"2026-06-22T08:15:17\",
     \"search\": \"n\",
     \"location\": \"g\"
 }"
@@ -1160,9 +1160,9 @@ const headers = {
 
 let body = {
     "game": 16,
-    "status": "cancelled",
+    "status": "ongoing",
     "price": "paid",
-    "date": "2026-06-21T21:49:34",
+    "date": "2026-06-22T08:15:17",
     "search": "n",
     "location": "g"
 };
@@ -1394,10 +1394,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="GETapi-events"
-               value="cancelled"
+               value="ongoing"
                data-component="body">
     <br>
-<p>Example: <code>cancelled</code></p>
+<p>Example: <code>ongoing</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>upcoming</code></li> <li><code>ongoing</code></li> <li><code>finished</code></li> <li><code>cancelled</code></li></ul>
         </div>
@@ -1422,10 +1422,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="GETapi-events"
-               value="2026-06-21T21:49:34"
+               value="2026-06-22T08:15:17"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-21T21:49:34</code></p>
+<p>Must be a valid date. Example: <code>2026-06-22T08:15:17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
@@ -3484,56 +3484,56 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 3,
-            &quot;name&quot;: &quot;Digimon&quot;
-        },
-        {
-            &quot;id&quot;: 4,
-            &quot;name&quot;: &quot;Dragon Ball Super&quot;
-        },
-        {
-            &quot;id&quot;: 5,
-            &quot;name&quot;: &quot;Flesh and Blood&quot;
-        },
-        {
-            &quot;id&quot;: 6,
-            &quot;name&quot;: &quot;KeyForge&quot;
-        },
-        {
-            &quot;id&quot;: 7,
-            &quot;name&quot;: &quot;Lorcana&quot;
-        },
-        {
-            &quot;id&quot;: 8,
-            &quot;name&quot;: &quot;Magic: The Gathering&quot;
-        },
-        {
-            &quot;id&quot;: 9,
-            &quot;name&quot;: &quot;MetaZoo&quot;
-        },
-        {
-            &quot;id&quot;: 10,
-            &quot;name&quot;: &quot;One Piece&quot;
-        },
-        {
             &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;Pok&eacute;mon&quot;
-        },
-        {
-            &quot;id&quot;: 11,
-            &quot;name&quot;: &quot;Star Wars: Unlimited&quot;
-        },
-        {
-            &quot;id&quot;: 12,
-            &quot;name&quot;: &quot;Union Arena&quot;
-        },
-        {
-            &quot;id&quot;: 13,
-            &quot;name&quot;: &quot;Vanguard&quot;
+            &quot;name&quot;: &quot;Yu-Gi-Oh!&quot;
         },
         {
             &quot;id&quot;: 2,
-            &quot;name&quot;: &quot;Yu-Gi-Oh!&quot;
+            &quot;name&quot;: &quot;Pok&eacute;mon&quot;
+        },
+        {
+            &quot;id&quot;: 3,
+            &quot;name&quot;: &quot;Magic: The Gathering&quot;
+        },
+        {
+            &quot;id&quot;: 4,
+            &quot;name&quot;: &quot;One Piece&quot;
+        },
+        {
+            &quot;id&quot;: 5,
+            &quot;name&quot;: &quot;League of Legends Riftbound&quot;
+        },
+        {
+            &quot;id&quot;: 6,
+            &quot;name&quot;: &quot;Disney Lorcana&quot;
+        },
+        {
+            &quot;id&quot;: 7,
+            &quot;name&quot;: &quot;Dragon Ball Super Card Game&quot;
+        },
+        {
+            &quot;id&quot;: 8,
+            &quot;name&quot;: &quot;Star Wars: Unlimited&quot;
+        },
+        {
+            &quot;id&quot;: 9,
+            &quot;name&quot;: &quot;Final Fantasy TCG&quot;
+        },
+        {
+            &quot;id&quot;: 10,
+            &quot;name&quot;: &quot;Flesh and Blood&quot;
+        },
+        {
+            &quot;id&quot;: 11,
+            &quot;name&quot;: &quot;Digimon Card Game&quot;
+        },
+        {
+            &quot;id&quot;: 12,
+            &quot;name&quot;: &quot;Gundam Card Game&quot;
+        },
+        {
+            &quot;id&quot;: 13,
+            &quot;name&quot;: &quot;Altered&quot;
         }
     ]
 }</code>

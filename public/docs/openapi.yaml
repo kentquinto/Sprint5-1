@@ -573,7 +573,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: cancelled
+                  example: ongoing
                   enum:
                     - upcoming
                     - ongoing
@@ -589,7 +589,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-21T21:49:34'
+                  example: '2026-06-22T08:15:17'
                 search:
                   type: string
                   description: 'Must not be greater than 100 characters.'
@@ -1674,83 +1674,83 @@ paths:
                 example:
                   data:
                     -
-                      id: 3
-                      name: Digimon
-                    -
-                      id: 4
-                      name: 'Dragon Ball Super'
-                    -
-                      id: 5
-                      name: 'Flesh and Blood'
-                    -
-                      id: 6
-                      name: KeyForge
-                    -
-                      id: 7
-                      name: Lorcana
-                    -
-                      id: 8
-                      name: 'Magic: The Gathering'
-                    -
-                      id: 9
-                      name: MetaZoo
-                    -
-                      id: 10
-                      name: 'One Piece'
-                    -
                       id: 1
-                      name: Pokémon
-                    -
-                      id: 11
-                      name: 'Star Wars: Unlimited'
-                    -
-                      id: 12
-                      name: 'Union Arena'
-                    -
-                      id: 13
-                      name: Vanguard
+                      name: Yu-Gi-Oh!
                     -
                       id: 2
-                      name: Yu-Gi-Oh!
+                      name: Pokémon
+                    -
+                      id: 3
+                      name: 'Magic: The Gathering'
+                    -
+                      id: 4
+                      name: 'One Piece'
+                    -
+                      id: 5
+                      name: 'League of Legends Riftbound'
+                    -
+                      id: 6
+                      name: 'Disney Lorcana'
+                    -
+                      id: 7
+                      name: 'Dragon Ball Super Card Game'
+                    -
+                      id: 8
+                      name: 'Star Wars: Unlimited'
+                    -
+                      id: 9
+                      name: 'Final Fantasy TCG'
+                    -
+                      id: 10
+                      name: 'Flesh and Blood'
+                    -
+                      id: 11
+                      name: 'Digimon Card Game'
+                    -
+                      id: 12
+                      name: 'Gundam Card Game'
+                    -
+                      id: 13
+                      name: Altered
                 properties:
                   data:
                     type: array
                     example:
-                      - id: 3
-                        name: Digimon
-                      - id: 4
-                        name: 'Dragon Ball Super'
-                      - id: 5
-                        name: 'Flesh and Blood'
-                      - id: 6
-                        name: KeyForge
-                      - id: 7
-                        name: Lorcana
-                      - id: 8
-                        name: 'Magic: The Gathering'
-                      - id: 9
-                        name: MetaZoo
-                      - id: 10
-                        name: 'One Piece'
                       - id: 1
-                        name: Pokémon
-                      - id: 11
-                        name: 'Star Wars: Unlimited'
-                      - id: 12
-                        name: 'Union Arena'
-                      - id: 13
-                        name: Vanguard
-                      - id: 2
                         name: Yu-Gi-Oh!
+                      - id: 2
+                        name: Pokémon
+                      - id: 3
+                        name: 'Magic: The Gathering'
+                      - id: 4
+                        name: 'One Piece'
+                      - id: 5
+                        name: 'League of Legends Riftbound'
+                      - id: 6
+                        name: 'Disney Lorcana'
+                      - id: 7
+                        name: 'Dragon Ball Super Card Game'
+                      - id: 8
+                        name: 'Star Wars: Unlimited'
+                      - id: 9
+                        name: 'Final Fantasy TCG'
+                      - id: 10
+                        name: 'Flesh and Blood'
+                      - id: 11
+                        name: 'Digimon Card Game'
+                      - id: 12
+                        name: 'Gundam Card Game'
+                      - id: 13
+                        name: Altered
                     items:
                       type: object
                       properties:
                         id:
                           type: integer
-                          example: 3
+                          example: 1
                         name:
                           type: string
-                          example: Digimon
+                          example: Yu-Gi-Oh!
       tags:
         - Games
       security: []
