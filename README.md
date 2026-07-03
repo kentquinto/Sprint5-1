@@ -108,7 +108,18 @@ php artisan passport:install
 php artisan db:seed
 ```
 
-### 4 — Run
+### 4 — Seed credentials
+
+The seeder creates 10 test users, all with the same password:
+
+| Email | Password |
+|---|---|
+| `tester1@test.com` | `password` |
+| `tester2@test.com` | `password` |
+| `tester3@test.com` | `password` |
+| *(tester4 – tester10)* | `password` |
+
+### 5 — Run
 
 ```bash
 php artisan serve
@@ -262,7 +273,7 @@ These are enforced server-side — they cannot be bypassed:
 - You **cannot join the same event twice**
 - You **cannot join a full event** (enforces `max_players`)
 - You **cannot join a finished or cancelled event**
-- Only the **event creator** can update or delete it (enforced via `EventPolicy`)
+- Only the **event creator** can update or delete it — anyone else gets a `403 Forbidden` (enforced via `EventPolicy`)
 
 ---
 
@@ -337,6 +348,18 @@ tests/Feature/Api/
 ## Supported TCGs
 
 Yu-Gi-Oh! · Pokémon · Magic: The Gathering · One Piece · League of Legends Riftbound · Disney Lorcana · Dragon Ball Super Card Game · Star Wars: Unlimited · Final Fantasy TCG · Flesh and Blood · Digimon Card Game · Gundam Card Game · Altered
+
+---
+
+## CORS
+
+CORS is enabled for all `api/*` routes. By default, **all origins are allowed** (`*`) — suitable for local development.
+
+To restrict access to a specific frontend origin, edit `config/cors.php`:
+
+```php
+'allowed_origins' => ['http://localhost:5173'],
+```
 
 ---
 
