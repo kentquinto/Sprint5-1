@@ -4,7 +4,12 @@ use App\Models\Event;
 use App\Models\Game;
 use App\Models\User;
 
-// ─── PUBLIC PROFILE ───────────────────────────────────────────────────────────
+beforeEach(function () {
+    $this->viewer = User::factory()->create();
+    $this->token  = $this->viewer->createToken('api')->accessToken;
+});
+
+// ─── PLAYER PROFILE ───────────────────────────────────────────────────────────
 
 it('returns a public profile for an existing player', function () {
     $game = Game::create(['name' => 'Pokémon']);
@@ -14,7 +19,9 @@ it('returns a public profile for an existing player', function () {
         'favorite_game_id' => $game->id,
     ]);
 
-    $response = $this->getJson("/api/players/{$user->id}");
+    $response = $this->getJson("/api/players/{$user->id}", [
+        'Authorization' => "Bearer {$this->token}",
+    ]);
 
     $response->assertStatus(200)
              ->assertJsonStructure(['id', 'name', 'bio', 'country', 'favorite_game', 'organized_events_count', 'joined_events_count'])
@@ -27,17 +34,19 @@ it('returns a public profile for an existing player', function () {
 });
 
 it('returns 404 for a non-existent player', function () {
-    $response = $this->getJson('/api/players/999');
+    $response = $this->getJson('/api/players/999', [
+        'Authorization' => "Bearer {$this->token}",
+    ]);
 
     $response->assertStatus(404);
 });
 
-it('public profile is accessible without authentication', function () {
+it('requires authentication to view a player profile', function () {
     $user = User::factory()->create();
 
     $response = $this->getJson("/api/players/{$user->id}");
 
-    $response->assertStatus(200);
+    $response->assertStatus(401);
 });
 
 it('returns correct organized and joined event counts', function () {
@@ -59,11 +68,15 @@ it('returns correct organized and joined event counts', function () {
         'creator_id' => $organizer->id, 'game_id' => $game->id,
     ]);
 
-    $response = $this->getJson("/api/players/{$organizer->id}");
+    $response = $this->getJson("/api/players/{$organizer->id}", [
+        'Authorization' => "Bearer {$this->token}",
+    ]);
     $response->assertStatus(200)
              ->assertJson(['organized_events_count' => 2, 'joined_events_count' => 0]);
 
-    $response = $this->getJson("/api/players/{$player->id}");
+    $response = $this->getJson("/api/players/{$player->id}", [
+        'Authorization' => "Bearer {$this->token}",
+    ]);
     $response->assertStatus(200)
              ->assertJson(['organized_events_count' => 0, 'joined_events_count' => 1]);
 });
@@ -71,7 +84,9 @@ it('returns correct organized and joined event counts', function () {
 it('returns null favorite_game when user has none set', function () {
     $user = User::factory()->create(['favorite_game_id' => null]);
 
-    $response = $this->getJson("/api/players/{$user->id}");
+    $response = $this->getJson("/api/players/{$user->id}", [
+        'Authorization' => "Bearer {$this->token}",
+    ]);
 
     $response->assertStatus(200)
              ->assertJson(['favorite_game' => null]);
