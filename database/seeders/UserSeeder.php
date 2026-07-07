@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester1',
                 'email'            => 'tester1@test.com',
+                'role'             => 'organizer',
                 'bio'              => 'Competitive Pokémon player and event organizer from the Philippines.',
                 'country'          => 'Philippines',
                 'favorite_game_id' => $games['Pokémon'] ?? null,
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester2',
                 'email'            => 'tester2@test.com',
+                'role'             => 'organizer',
                 'bio'              => 'Yu-Gi-Oh! enthusiast who has been dueling since the original TV series.',
                 'country'          => 'Japan',
                 'favorite_game_id' => $games['Yu-Gi-Oh!'] ?? null,
@@ -31,6 +33,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester3',
                 'email'            => 'tester3@test.com',
+                'role'             => 'organizer',
                 'bio'              => 'Magic: The Gathering grinder. Legacy and Modern are my formats.',
                 'country'          => 'United States',
                 'favorite_game_id' => $games['Magic: The Gathering'] ?? null,
@@ -38,6 +41,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester4',
                 'email'            => 'tester4@test.com',
+                'role'             => 'organizer',
                 'bio'              => 'Casual Disney Lorcana collector who loves the art more than the game.',
                 'country'          => 'Spain',
                 'favorite_game_id' => $games['Disney Lorcana'] ?? null,
@@ -45,6 +49,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester5',
                 'email'            => 'tester5@test.com',
+                'role'             => 'organizer',
                 'bio'              => 'Dragon Ball Super Card Game tournament judge and content creator.',
                 'country'          => 'Italy',
                 'favorite_game_id' => $games['Dragon Ball Super Card Game'] ?? null,
@@ -52,6 +57,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester6',
                 'email'            => 'tester6@test.com',
+                'role'             => 'player',
                 'bio'              => 'One Piece Card Game player — Luffy deck main.',
                 'country'          => 'Japan',
                 'favorite_game_id' => $games['One Piece'] ?? null,
@@ -59,6 +65,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester7',
                 'email'            => 'tester7@test.com',
+                'role'             => 'player',
                 'bio'              => 'Flesh and Blood hero — mostly Blitz format at my local game store.',
                 'country'          => 'Ireland',
                 'favorite_game_id' => $games['Flesh and Blood'] ?? null,
@@ -66,6 +73,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester8',
                 'email'            => 'tester8@test.com',
+                'role'             => 'player',
                 'bio'              => 'Digimon Card Game regional finalist. BT set collector.',
                 'country'          => 'South Korea',
                 'favorite_game_id' => $games['Digimon Card Game'] ?? null,
@@ -73,6 +81,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester9',
                 'email'            => 'tester9@test.com',
+                'role'             => 'player',
                 'bio'              => 'Star Wars: Unlimited player chasing the perfect control deck.',
                 'country'          => 'United Kingdom',
                 'favorite_game_id' => $games['Star Wars: Unlimited'] ?? null,
@@ -80,6 +89,7 @@ class UserSeeder extends Seeder
             [
                 'name'             => 'tester10',
                 'email'            => 'tester10@test.com',
+                'role'             => 'player',
                 'bio'              => 'Final Fantasy TCG fan — Cloud deck forever.',
                 'country'          => 'Germany',
                 'favorite_game_id' => $games['Final Fantasy TCG'] ?? null,
