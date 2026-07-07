@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "TCG Manager API",
-        "_postman_id": "4d1b99b9-19bf-4e01-8790-c66c69a3b829",
+        "_postman_id": "a2b71da9-05bf-4114-a668-3105da06b188",
         "description": "REST API for TCG Manager \u2014 a tournament management platform for Trading Card Game players and organizers. Supports event discovery, creation, and participation across 13 supported games including Pok\u00e9mon, Yu-Gi-Oh!, Magic: The Gathering, and more.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -41,7 +41,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"Player One\",\"email\":\"test@example.com\",\"password\":\"yourpassword\",\"password_confirmation\":\"yourpassword\"}"
+                            "raw": "{\"name\":\"Player One\",\"email\":\"test@example.com\",\"password\":\"yourpassword\",\"role\":\"organizer\",\"password_confirmation\":\"yourpassword\"}"
                         },
                         "description": "Creates a new player account and returns a Bearer token you can use immediately.",
                         "auth": {
@@ -178,7 +178,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"id\": 1,\n  \"name\": \"Player One\",\n  \"email\": \"test@example.com\",\n  \"bio\": \"Pok\u00e9mon TCG player since 2010.\",\n  \"country\": \"ES\",\n  \"favorite_game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" }\n}",
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Player One\",\n  \"email\": \"test@example.com\",\n  \"role\": \"organizer\",\n  \"bio\": \"Pok\u00e9mon TCG player since 2010.\",\n  \"country\": \"ES\",\n  \"favorite_game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" }\n}",
                             "name": ""
                         },
                         {
@@ -219,7 +219,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"id\": 1,\n  \"name\": \"Player One\",\n  \"email\": \"test@example.com\",\n  \"bio\": \"Pok\u00e9mon TCG player since 2010.\",\n  \"country\": \"ES\",\n  \"favorite_game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" }\n}",
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Player One\",\n  \"email\": \"test@example.com\",\n  \"role\": \"organizer\",\n  \"bio\": \"Pok\u00e9mon TCG player since 2010.\",\n  \"country\": \"ES\",\n  \"favorite_game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" }\n}",
                             "name": ""
                         },
                         {
@@ -301,7 +301,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"game\":16,\"status\":\"ongoing\",\"price\":\"paid\",\"date\":\"2026-06-22T08:15:17\",\"search\":\"n\",\"location\":\"g\"}"
+                            "raw": "{\"game\":16,\"status\":\"cancelled\",\"price\":\"free\",\"date\":\"2026-07-07T14:25:47\",\"search\":\"n\",\"location\":\"g\"}"
                         },
                         "description": "Returns a paginated list of all events (20 per page). Use the query parameters to filter the results.",
                         "auth": {
@@ -404,6 +404,12 @@
                             "code": 401,
                             "body": "{ \"message\": \"Unauthenticated.\" }",
                             "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{ \"message\": \"Only organizers can create events.\" }",
+                            "name": "Player role"
                         },
                         {
                             "header": [],

@@ -38,6 +38,7 @@ endpoints:
             "id": 1,
             "name": "Player One",
             "email": "test@example.com",
+            "role": "organizer",
             "bio": "Pokémon TCG player since 2010.",
             "country": "ES",
             "favorite_game": { "id": 1, "name": "Pokémon" }
@@ -141,6 +142,7 @@ endpoints:
             "id": 1,
             "name": "Player One",
             "email": "test@example.com",
+            "role": "organizer",
             "bio": "Pokémon TCG player since 2010.",
             "country": "ES",
             "favorite_game": { "id": 1, "name": "Pokémon" }

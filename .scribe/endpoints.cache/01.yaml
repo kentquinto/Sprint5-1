@@ -126,7 +126,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: ongoing
+        example: cancelled
         type: string
         enumValues:
           - upcoming
@@ -141,7 +141,7 @@ endpoints:
         name: price
         description: ''
         required: false
-        example: paid
+        example: free
         type: string
         enumValues:
           - free
@@ -154,7 +154,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-22T08:15:17'
+        example: '2026-07-07T14:25:47'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -184,9 +184,9 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       game: 16
-      status: ongoing
-      price: paid
-      date: '2026-06-22T08:15:17'
+      status: cancelled
+      price: free
+      date: '2026-07-07T14:25:47'
       search: 'n'
       location: g
     fileParameters: []
@@ -425,6 +425,12 @@ endpoints:
         content: '{ "message": "Unauthenticated." }'
         headers: []
         description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{ "message": "Only organizers can create events." }'
+        headers: []
+        description: 'Player role'
       -
         custom: []
         status: 422

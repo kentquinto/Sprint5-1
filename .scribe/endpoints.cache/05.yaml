@@ -59,6 +59,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      role:
+        custom: []
+        name: role
+        description: 'Optional. `player` (default) or `organizer`. Players can join events; organizers can also create, edit and delete their own events.'
+        required: false
+        example: organizer
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       password_confirmation:
         custom: []
         name: password_confirmation
@@ -74,6 +85,7 @@ endpoints:
       name: 'Player One'
       email: test@example.com
       password: yourpassword
+      role: organizer
       password_confirmation: yourpassword
     fileParameters: []
     responses:
