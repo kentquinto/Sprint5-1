@@ -27,7 +27,7 @@ it('returns player statistics ranked by events joined', function () {
     $game    = Game::create(['name' => 'Pokémon']);
     $player1 = User::factory()->create();
     $player2 = User::factory()->create();
-    $organizer = User::factory()->create();
+    $organizer = User::factory()->organizer()->create();
 
     $event1 = makeStatEvent($organizer, $game);
     $event2 = makeStatEvent($organizer, $game);
@@ -55,7 +55,7 @@ it('player stats are publicly accessible', function () {
 it('returns game statistics ranked by number of events', function () {
     $pokemon = Game::create(['name' => 'Pokémon']);
     $yugioh  = Game::create(['name' => 'Yu-Gi-Oh!']);
-    $organizer = User::factory()->create();
+    $organizer = User::factory()->organizer()->create();
 
     makeStatEvent($organizer, $pokemon);
     makeStatEvent($organizer, $pokemon);
@@ -79,8 +79,8 @@ it('game stats are publicly accessible', function () {
 
 it('returns organizer statistics ranked by events created', function () {
     $game = Game::create(['name' => 'Pokémon']);
-    $org1 = User::factory()->create();
-    $org2 = User::factory()->create();
+    $org1 = User::factory()->organizer()->create();
+    $org2 = User::factory()->organizer()->create();
 
     makeStatEvent($org1, $game);
     makeStatEvent($org1, $game);

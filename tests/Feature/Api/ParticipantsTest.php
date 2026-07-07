@@ -6,7 +6,7 @@ use App\Models\User;
 
 beforeEach(function () {
     $this->game      = Game::create(['name' => 'Pokémon']);
-    $this->organizer = User::factory()->create();
+    $this->organizer = User::factory()->organizer()->create();
     $this->player    = User::factory()->create();
     $this->token     = $this->player->createToken('api')->accessToken;
 
