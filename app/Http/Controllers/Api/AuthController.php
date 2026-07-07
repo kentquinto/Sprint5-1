@@ -23,6 +23,7 @@ class AuthController extends Controller
      * @bodyParam email string required A valid, unique email address. Example: test@example.com
      * @bodyParam password string required Min 8 characters. Example: yourpassword
      * @bodyParam password_confirmation string required Must match `password`. Example: yourpassword
+     * @bodyParam role string Optional. `player` (default) or `organizer`. Players can join events; organizers can also create, edit and delete their own events. Example: organizer
      *
      * @response 201 {
      *   "message": "User registered successfully",
@@ -39,9 +40,10 @@ class AuthController extends Controller
             'name'     => 'required|string|min:2|max:255',
             'email'    => 'required|email|unique:users',
             'password' => 'required|confirmed|min:8',
+            'role'     => 'sometimes|in:player,organizer',
         ]);
 
-        $user = User::create($request->only(['name', 'email', 'password']));
+        $user = User::create($request->only(['name', 'email', 'password', 'role']));
 
         return response()->json(['message' => 'User registered successfully', 'token' => $this->issueToken($user)], 201);
     }
@@ -91,6 +93,7 @@ class AuthController extends Controller
      *   "id": 1,
      *   "name": "Player One",
      *   "email": "test@example.com",
+     *   "role": "organizer",
      *   "bio": "Pokémon TCG player since 2010.",
      *   "country": "ES",
      *   "favorite_game": { "id": 1, "name": "Pokémon" }
@@ -119,6 +122,7 @@ class AuthController extends Controller
      *   "id": 1,
      *   "name": "Player One",
      *   "email": "test@example.com",
+     *   "role": "organizer",
      *   "bio": "Pokémon TCG player since 2010.",
      *   "country": "ES",
      *   "favorite_game": { "id": 1, "name": "Pokémon" }
