@@ -14,7 +14,7 @@ class PlayerController extends Controller
      * Returns a player's public profile including their bio, country, favourite game and event statistics.
      *
      * @group Players
-     * @unauthenticated
+     * @authenticated
      *
      * @urlParam user_id integer required The ID of the player. Example: 1
      *
@@ -27,7 +27,8 @@ class PlayerController extends Controller
      *   "organized_events_count": 5,
      *   "joined_events_count": 12
      * }
-     * @response 404 scenario="User not found" { "message": "No query results for model [App\\Models\\User] 99" }
+     * @response 401 scenario="Unauthenticated" { "message": "Unauthenticated." }
+     * @response 404 scenario="User not found" { "message": "Resource not found." }
      */
     public function show(User $user): PublicProfileResource
     {

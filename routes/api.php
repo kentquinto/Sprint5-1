@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/games',                          [GameController::class,       'index']);
 Route::get('/events',                         [EventController::class,      'index']);
 Route::get('/events/{event}',                 [EventController::class,      'show']);
-Route::get('/events/{event}/participants',    [ParticipantController::class, 'index']);
-Route::get('/players/{user}',                 [PlayerController::class,     'show']);
 Route::get('/stats/players',                  [StatisticsController::class, 'players']);
 Route::get('/stats/games',                    [StatisticsController::class, 'games']);
 Route::get('/stats/organizers',               [StatisticsController::class, 'organizers']);
@@ -35,6 +33,9 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/events/{event}',              [EventController::class,      'update']);
     Route::delete('/events/{event}',           [EventController::class,      'destroy']);
 
+    Route::get('/events/{event}/participants',    [ParticipantController::class, 'index']);
     Route::post('/events/{event}/participants',   [ParticipantController::class, 'store']);
     Route::delete('/events/{event}/participants', [ParticipantController::class, 'destroy']);
+
+    Route::get('/players/{user}',                [PlayerController::class,      'show']);
 });
