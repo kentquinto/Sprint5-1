@@ -14,6 +14,7 @@ class UserResource extends JsonResource
             'id'            => $this->id,
             'name'          => $this->name,
             'email'         => $this->email,
+            'role'          => $this->role,
             'bio'           => $this->bio,
             'country'       => $this->country,
             'favorite_game' => GameResource::make($this->whenLoaded('favoriteGame')),

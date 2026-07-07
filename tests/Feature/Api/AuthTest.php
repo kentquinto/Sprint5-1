@@ -90,7 +90,7 @@ it('returns current user with GET /api/me', function () {
     ]);
 
     $response->assertStatus(200)
-             ->assertJsonStructure(['id', 'name', 'email', 'bio', 'country', 'favorite_game'])
+             ->assertJsonStructure(['id', 'name', 'email', 'role', 'bio', 'country', 'favorite_game'])
              ->assertJson(['id' => $user->id, 'email' => $user->email]);
 });
 
