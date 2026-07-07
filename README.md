@@ -198,7 +198,7 @@ php artisan scribe:generate
 
 | Method | Endpoint | Auth | Description |
 |---|---|---|---|
-| `GET` | `/api/events/{id}/participants` | Public | List all participants of an event |
+| `GET` | `/api/events/{id}/participants` | 🔒 | List all participants of an event |
 | `POST` | `/api/events/{id}/participants` | 🔒 | Join an event |
 | `DELETE` | `/api/events/{id}/participants` | 🔒 | Leave an event |
 
@@ -213,7 +213,7 @@ php artisan scribe:generate
 
 | Method | Endpoint | Auth | Description |
 |---|---|---|---|
-| `GET` | `/api/players/{id}` | Public | Public profile of any player |
+| `GET` | `/api/players/{id}` | 🔒 | Player profile |
 
 ### Games & Statistics
 
