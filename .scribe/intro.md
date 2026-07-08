@@ -10,6 +10,15 @@ Welcome to the TCG Manager API. This API allows you to browse and manage trading
 
 <aside>Use the <b>Try It Out</b> button on any endpoint to test it directly from this page. For protected endpoints, click <b>Authorize</b> at the top and paste your Bearer token.</aside>
 
+## Roles
+
+There are two user roles in this API:
+
+- **`player`** — can browse events, join/leave events, and manage their own profile
+- **`organizer`** — everything a player can do, plus create, edit and delete their own events
+
+Pass `"role": "organizer"` in the register request body to sign up as an organizer. Defaults to `player` if omitted.
+
 ## How to get a token
 
 1. Register a new account via `POST /api/register`, or log in via `POST /api/login`.

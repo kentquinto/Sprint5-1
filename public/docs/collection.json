@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "TCG Manager API",
-        "_postman_id": "4d1b99b9-19bf-4e01-8790-c66c69a3b829",
+        "_postman_id": "5f8f0035-4216-4148-a34d-6a124cbd713e",
         "description": "REST API for TCG Manager \u2014 a tournament management platform for Trading Card Game players and organizers. Supports event discovery, creation, and participation across 13 supported games including Pok\u00e9mon, Yu-Gi-Oh!, Magic: The Gathering, and more.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -41,7 +41,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"Player One\",\"email\":\"test@example.com\",\"password\":\"yourpassword\",\"password_confirmation\":\"yourpassword\"}"
+                            "raw": "{\"name\":\"Player One\",\"email\":\"test@example.com\",\"password\":\"yourpassword\",\"role\":\"organizer\",\"password_confirmation\":\"yourpassword\"}"
                         },
                         "description": "Creates a new player account and returns a Bearer token you can use immediately.",
                         "auth": {
@@ -178,7 +178,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"id\": 1,\n  \"name\": \"Player One\",\n  \"email\": \"test@example.com\",\n  \"bio\": \"Pok\u00e9mon TCG player since 2010.\",\n  \"country\": \"ES\",\n  \"favorite_game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" }\n}",
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Player One\",\n  \"email\": \"test@example.com\",\n  \"role\": \"organizer\",\n  \"bio\": \"Pok\u00e9mon TCG player since 2010.\",\n  \"country\": \"ES\",\n  \"favorite_game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" }\n}",
                             "name": ""
                         },
                         {
@@ -219,7 +219,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"id\": 1,\n  \"name\": \"Player One\",\n  \"email\": \"test@example.com\",\n  \"bio\": \"Pok\u00e9mon TCG player since 2010.\",\n  \"country\": \"ES\",\n  \"favorite_game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" }\n}",
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Player One\",\n  \"email\": \"test@example.com\",\n  \"role\": \"organizer\",\n  \"bio\": \"Pok\u00e9mon TCG player since 2010.\",\n  \"country\": \"ES\",\n  \"favorite_game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" }\n}",
                             "name": ""
                         },
                         {
@@ -301,7 +301,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"game\":16,\"status\":\"ongoing\",\"price\":\"paid\",\"date\":\"2026-06-22T08:15:17\",\"search\":\"n\",\"location\":\"g\"}"
+                            "raw": "{\"game\":16,\"status\":\"upcoming\",\"price\":\"paid\",\"date\":\"2026-07-07T19:48:33\",\"search\":\"n\",\"location\":\"g\"}"
                         },
                         "description": "Returns a paginated list of all events (20 per page). Use the query parameters to filter the results.",
                         "auth": {
@@ -361,7 +361,7 @@
                         {
                             "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -404,6 +404,12 @@
                             "code": 401,
                             "body": "{ \"message\": \"Unauthenticated.\" }",
                             "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{ \"message\": \"Only organizers can create events.\" }",
+                            "name": "Player role"
                         },
                         {
                             "header": [],
@@ -469,7 +475,7 @@
                         {
                             "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -527,7 +533,7 @@
                         {
                             "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -567,10 +573,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "Returns all players who have joined a specific event.",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": "Returns all players who have joined a specific event."
                     },
                     "response": [
                         {
@@ -581,8 +584,14 @@
                         },
                         {
                             "header": [],
+                            "code": 401,
+                            "body": "{ \"message\": \"Unauthenticated.\" }",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -710,7 +719,7 @@
                         {
                             "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -846,10 +855,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "Returns a player's public profile including their bio, country, favourite game and event statistics.",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": "Returns a player's public profile including their bio, country, favourite game and event statistics."
                     },
                     "response": [
                         {
@@ -860,8 +866,14 @@
                         },
                         {
                             "header": [],
+                            "code": 401,
+                            "body": "{ \"message\": \"Unauthenticated.\" }",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\User] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "User not found"
                         }
                     ]

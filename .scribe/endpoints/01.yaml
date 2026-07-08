@@ -124,7 +124,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: ongoing
+        example: upcoming
         type: string
         enumValues:
           - upcoming
@@ -152,7 +152,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-22T08:15:17'
+        example: '2026-07-07T19:48:33'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -182,9 +182,9 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       game: 16
-      status: ongoing
+      status: upcoming
       price: paid
-      date: '2026-06-22T08:15:17'
+      date: '2026-07-07T19:48:33'
       search: 'n'
       location: g
     fileParameters: []
@@ -279,7 +279,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{ "message": "No query results for model [App\\Models\\Event] 99" }'
+        content: '{ "message": "Resource not found." }'
         headers: []
         description: 'Event not found'
     responseFields: []
@@ -423,6 +423,12 @@ endpoints:
         content: '{ "message": "Unauthenticated." }'
         headers: []
         description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{ "message": "Only organizers can create events." }'
+        headers: []
+        description: 'Player role'
       -
         custom: []
         status: 422
@@ -598,7 +604,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{ "message": "No query results for model [App\\Models\\Event] 99" }'
+        content: '{ "message": "Resource not found." }'
         headers: []
         description: 'Event not found'
     responseFields: []
@@ -669,7 +675,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{ "message": "No query results for model [App\\Models\\Event] 99" }'
+        content: '{ "message": "Resource not found." }'
         headers: []
         description: 'Event not found'
     responseFields: []

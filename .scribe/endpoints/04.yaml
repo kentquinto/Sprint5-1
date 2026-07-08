@@ -1,22 +1,23 @@
-name: Statistics
+name: Profile
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/stats/players
+    uri: api/me
     metadata:
       custom: []
-      groupName: Statistics
+      groupName: Profile
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Top players leaderboard.'
-      description: 'Returns the top 10 players ranked by number of events joined. Only players who have joined at least one event are included.'
-      authenticated: false
+      title: 'Get your profile.'
+      description: "Returns the authenticated user's own profile, including their favorite game."
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -31,97 +32,132 @@ endpoints:
         custom: []
         status: 200
         content: |-
-          [
-            { "id": 3, "name": "Player One", "joined_events_count": 15 },
-            { "id": 1, "name": "Player One", "joined_events_count": 12 }
-          ]
+          {
+            "id": 1,
+            "name": "Player One",
+            "email": "test@example.com",
+            "role": "organizer",
+            "bio": "Pokémon TCG player since 2010.",
+            "country": "ES",
+            "favorite_game": { "id": 1, "name": "Pokémon" }
+          }
         headers: []
         description: ''
+      -
+        custom: []
+        status: 401
+        content: '{ "message": "Unauthenticated." }'
+        headers: []
+        description: Unauthenticated
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
   -
     custom: []
     httpMethods:
-      - GET
-    uri: api/stats/games
+      - PUT
+    uri: api/me
     metadata:
       custom: []
-      groupName: Statistics
+      groupName: Profile
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Games leaderboard.'
-      description: 'Returns all supported games ranked by how many events have been created for them.'
-      authenticated: false
+      title: 'Update your profile.'
+      description: "Updates one or more fields on the authenticated user's profile. All fields are optional — only send what you want to change."
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Your new display name.'
+        required: false
+        example: 'Player One'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      bio:
+        custom: []
+        name: bio
+        description: 'A short bio shown on your public profile.'
+        required: false
+        example: 'Pokémon TCG player since 2010.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      country:
+        custom: []
+        name: country
+        description: 'A 2–10 character country code or name.'
+        required: false
+        example: ES
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      favorite_game_id:
+        custom: []
+        name: favorite_game_id
+        description: 'The ID of your favourite game (must exist in `/api/games`). Pass `null` to clear it.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Player One'
+      bio: 'Pokémon TCG player since 2010.'
+      country: ES
+      favorite_game_id: 1
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
         content: |-
-          [
-            { "id": 1, "name": "Pokémon",             "events_count": 8 },
-            { "id": 2, "name": "Yu-Gi-Oh!",           "events_count": 5 },
-            { "id": 8, "name": "Magic: The Gathering", "events_count": 3 }
-          ]
+          {
+            "id": 1,
+            "name": "Player One",
+            "email": "test@example.com",
+            "role": "organizer",
+            "bio": "Pokémon TCG player since 2010.",
+            "country": "ES",
+            "favorite_game": { "id": 1, "name": "Pokémon" }
+          }
         headers: []
         description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/stats/organizers
-    metadata:
-      custom: []
-      groupName: Statistics
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Top organizers leaderboard.'
-      description: 'Returns the top 10 organizers ranked by number of events created. Only organizers who have created at least one event are included.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
       -
         custom: []
-        status: 200
-        content: |-
-          [
-            { "id": 1, "name": "Player One", "organized_events_count": 5 },
-            { "id": 4, "name": "Player Three", "organized_events_count": 3 }
-          ]
+        status: 401
+        content: '{ "message": "Unauthenticated." }'
         headers: []
-        description: ''
+        description: Unauthenticated
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null

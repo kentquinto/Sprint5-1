@@ -18,6 +18,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
         'bio',
         'country',
         'favorite_game_id',

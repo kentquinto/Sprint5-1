@@ -6,7 +6,7 @@ use App\Models\User;
 
 beforeEach(function () {
     $this->game      = Game::create(['name' => 'Pokémon']);
-    $this->organizer = User::factory()->create();
+    $this->organizer = User::factory()->organizer()->create();
     $this->player    = User::factory()->create();
     $this->token     = $this->player->createToken('api')->accessToken;
 
@@ -28,17 +28,19 @@ beforeEach(function () {
 it('lists participants of an event', function () {
     $this->event->participants()->attach($this->player->id);
 
-    $response = $this->getJson("/api/events/{$this->event->id}/participants");
+    $response = $this->getJson("/api/events/{$this->event->id}/participants", [
+        'Authorization' => "Bearer {$this->token}",
+    ]);
 
     $response->assertStatus(200)
              ->assertJsonCount(1)
              ->assertJsonStructure([['id', 'name']]);
 });
 
-it('participants list is publicly accessible', function () {
+it('requires authentication to list participants', function () {
     $response = $this->getJson("/api/events/{$this->event->id}/participants");
 
-    $response->assertStatus(200);
+    $response->assertStatus(401);
 });
 
 // ─── JOIN EVENT ───────────────────────────────────────────────────────────────

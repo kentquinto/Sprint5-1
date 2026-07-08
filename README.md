@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/Laravel-13-FF2D20?style=for-the-badge&logo=laravel&logoColor=white">
   <img src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php&logoColor=white">
   <img src="https://img.shields.io/badge/Passport-13-orange?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Tests-86%20passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Tests-97%20passing-brightgreen?style=for-the-badge">
 </p>
 
 ---
@@ -24,11 +24,11 @@ This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed
 
 ## Features
 
+- **Role-based access control** — two roles: `player` (join events) and `organizer` (create, edit, delete events)
 - **Bearer token authentication** via Laravel Passport (register, login, logout)
-- **Event management** — create, update, delete and browse tournaments
+- **Event management** — organizers can create, update and delete their own tournaments; all users can browse
 - **Smart filtering** — filter events by game, status, price, date, location or search term
-- **Participant system** — join and leave events with full business rule enforcement
-- **Public player profiles** — bio, country, favourite game and event statistics
+- **Participant system** — players join and leave events with full business rule enforcement
 - **Personal dashboard** — your organized events and events you've joined
 - **Leaderboards** — top players, top organizers and most popular games
 - **Interactive API docs** — Try It Out, Postman collection and OpenAPI spec via Scribe
@@ -44,7 +44,7 @@ This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed
 | Language | PHP 8.3+ |
 | Authentication | Laravel Passport 13 (OAuth2 Bearer tokens) |
 | Database | SQLite (local) · MySQL (production) |
-| Testing | Pest 4.7 — 86 tests, 252 assertions |
+| Testing | Pest 4.7 — 97 tests, 281 assertions |
 | Documentation | Scribe 5.11 |
 | Architecture | REST, MVC, Repository-light, TDD |
 
@@ -54,15 +54,16 @@ This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed
 
 ### Prerequisites
 
-- PHP 8.3+
+- Git
+- PHP 8.3+ with extensions `pdo_sqlite` and `openssl` enabled
 - Composer
 - SQLite (built into PHP) or MySQL
 
 ### 1 — Clone and install
 
 ```bash
-git clone https://github.com/kentquinto/TCGManager-API-REST.git
-cd TCGManager-API-REST
+git clone https://github.com/kentquinto/Sprint5-1.git
+cd Sprint5-1
 composer install
 ```
 
@@ -96,28 +97,44 @@ DB_CONNECTION=sqlite
 
 ```bash
 # Create the SQLite file (skip if using MySQL)
+# Mac/Linux:
 touch database/database.sqlite
+# Windows:
+# echo. > database/database.sqlite
 
-# Run migrations
+# Run migrations — Passport OAuth tables are already included in this repo
 php artisan migrate
 
-# Install Passport (generates OAuth encryption keys)
-php artisan passport:install
+# Generate Passport encryption keys (stored in storage)
+php artisan passport:keys --force
+
+# Create the personal access client Passport needs to issue Bearer tokens
+php artisan passport:client --personal --name="TCGManager" --no-interaction
 
 # Seed: 13 games + sample users, events and participants
 php artisan db:seed
 ```
 
+> **Important — do NOT run `passport:install`** on this project. It will re-publish the Passport migrations that are already committed to the repo, creating duplicates that break migrations and tests.
+>
+> Use `passport:keys` + `passport:client` instead (shown above) — these two commands do exactly what is needed without touching the migrations.
+
 ### 4 — Seed credentials
 
 The seeder creates 10 test users, all with the same password:
 
-| Email | Password |
-|---|---|
-| `tester1@test.com` | `password` |
-| `tester2@test.com` | `password` |
-| `tester3@test.com` | `password` |
-| *(tester4 – tester10)* | `password` |
+| Email | Password | Role |
+|---|---|---|
+| `tester1@test.com` | `password` | `organizer` |
+| `tester2@test.com` | `password` | `organizer` |
+| `tester3@test.com` | `password` | `organizer` |
+| `tester4@test.com` | `password` | `organizer` |
+| `tester5@test.com` | `password` | `organizer` |
+| `tester6@test.com` | `password` | `player` |
+| `tester7@test.com` | `password` | `player` |
+| `tester8@test.com` | `password` | `player` |
+| `tester9@test.com` | `password` | `player` |
+| `tester10@test.com` | `password` | `player` |
 
 ### 5 — Run
 
@@ -164,7 +181,7 @@ php artisan scribe:generate
 
 | Method | Endpoint | Auth | Description |
 |---|---|---|---|
-| `GET` | `/api/me` | 🔒 | Get your own profile |
+| `GET` | `/api/me` | 🔒 | Get your own profile (includes `role`) |
 | `PUT` | `/api/me` | 🔒 | Update name, bio, country, favourite game |
 
 ### Events
@@ -181,7 +198,7 @@ php artisan scribe:generate
 
 | Method | Endpoint | Auth | Description |
 |---|---|---|---|
-| `GET` | `/api/events/{id}/participants` | Public | List all participants of an event |
+| `GET` | `/api/events/{id}/participants` | 🔒 | List all participants of an event |
 | `POST` | `/api/events/{id}/participants` | 🔒 | Join an event |
 | `DELETE` | `/api/events/{id}/participants` | 🔒 | Leave an event |
 
@@ -196,7 +213,7 @@ php artisan scribe:generate
 
 | Method | Endpoint | Auth | Description |
 |---|---|---|---|
-| `GET` | `/api/players/{id}` | Public | Public profile of any player |
+| `GET` | `/api/players/{id}` | 🔒 | Player profile |
 
 ### Games & Statistics
 
@@ -265,6 +282,21 @@ GET /api/events?game=1&status=upcoming&price=free
 
 ---
 
+## Roles
+
+There are two user roles, set at registration and stored on the user account:
+
+| Role | Permissions |
+|---|---|
+| `player` | Browse events, join/leave events, update own profile |
+| `organizer` | Everything a player can do + create, edit and delete their own events |
+
+Register as an organizer by passing `"role": "organizer"` in the register request body. Defaults to `player` if omitted.
+
+A player attempting to create, update, or delete an event receives a `403 Forbidden`.
+
+---
+
 ## Business Rules
 
 These are enforced server-side — they cannot be bypassed:
@@ -298,8 +330,8 @@ php artisan test
 ```
 
 ```
-Tests:    86 passed
-Assertions: 252
+Tests:    97 passed
+Assertions: 281
 Duration:  ~1.5s
 ```
 
@@ -340,7 +372,7 @@ routes/
 └── api.php       # 20 routes — public + auth:api protected group
 
 tests/Feature/Api/
-└── ...           # 86 Pest tests
+└── ...           # 97 Pest tests
 ```
 
 ---

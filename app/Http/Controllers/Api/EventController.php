@@ -97,7 +97,7 @@ class EventController extends Controller
      *   "game": { "id": 1, "name": "Pokémon" },
      *   "creator": { "id": 2, "name": "Player One" }
      * }
-     * @response 404 scenario="Event not found" { "message": "No query results for model [App\\Models\\Event] 99" }
+     * @response 404 scenario="Event not found" { "message": "Resource not found." }
      */
     public function show(Event $event): EventResource
     {
@@ -134,6 +134,7 @@ class EventController extends Controller
      *   "creator": { "id": 1, "name": "Player One" }
      * }
      * @response 401 scenario="Unauthenticated" { "message": "Unauthenticated." }
+     * @response 403 scenario="Player role" { "message": "Only organizers can create events." }
      * @response 422 scenario="Validation error" {
      *   "message": "The title field is required.",
      *   "errors": { "title": ["The title field is required."] }
@@ -141,6 +142,10 @@ class EventController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        if ($request->user()->role !== 'organizer') {
+            return response()->json(['message' => 'Only organizers can create events.'], 403);
+        }
+
         $request->validate($this->eventRules());
 
         $event = Event::create([
@@ -185,7 +190,7 @@ class EventController extends Controller
      * }
      * @response 401 scenario="Unauthenticated" { "message": "Unauthenticated." }
      * @response 403 scenario="Not the organizer" { "message": "This action is unauthorized." }
-     * @response 404 scenario="Event not found" { "message": "No query results for model [App\\Models\\Event] 99" }
+     * @response 404 scenario="Event not found" { "message": "Resource not found." }
      */
     public function update(Request $request, Event $event): EventResource
     {
@@ -211,7 +216,7 @@ class EventController extends Controller
      * @response 204 scenario="Deleted successfully" {}
      * @response 401 scenario="Unauthenticated" { "message": "Unauthenticated." }
      * @response 403 scenario="Not the organizer" { "message": "This action is unauthorized." }
-     * @response 404 scenario="Event not found" { "message": "No query results for model [App\\Models\\Event] 99" }
+     * @response 404 scenario="Event not found" { "message": "Resource not found." }
      */
     public function destroy(Event $event): Response
     {

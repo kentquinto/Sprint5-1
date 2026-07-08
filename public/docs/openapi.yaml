@@ -100,6 +100,10 @@ paths:
                   type: string
                   description: 'Min 8 characters.'
                   example: yourpassword
+                role:
+                  type: string
+                  description: 'Optional. `player` (default) or `organizer`. Players can join events; organizers can also create, edit and delete their own events.'
+                  example: organizer
                 password_confirmation:
                   type: string
                   description: 'Must match `password`.'
@@ -216,6 +220,7 @@ paths:
                   id: 1
                   name: 'Player One'
                   email: test@example.com
+                  role: organizer
                   bio: 'Pokémon TCG player since 2010.'
                   country: ES
                   favorite_game:
@@ -231,6 +236,9 @@ paths:
                   email:
                     type: string
                     example: test@example.com
+                  role:
+                    type: string
+                    example: organizer
                   bio:
                     type: string
                     example: 'Pokémon TCG player since 2010.'
@@ -276,6 +284,7 @@ paths:
                   id: 1
                   name: 'Player One'
                   email: test@example.com
+                  role: organizer
                   bio: 'Pokémon TCG player since 2010.'
                   country: ES
                   favorite_game:
@@ -291,6 +300,9 @@ paths:
                   email:
                     type: string
                     example: test@example.com
+                  role:
+                    type: string
+                    example: organizer
                   bio:
                     type: string
                     example: 'Pokémon TCG player since 2010.'
@@ -573,7 +585,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: ongoing
+                  example: upcoming
                   enum:
                     - upcoming
                     - ongoing
@@ -589,7 +601,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-22T08:15:17'
+                  example: '2026-07-07T19:48:33'
                 search:
                   type: string
                   description: 'Must not be greater than 100 characters.'
@@ -685,6 +697,18 @@ paths:
                   message:
                     type: string
                     example: Unauthenticated.
+        403:
+          description: 'Player role'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Only organizers can create events.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Only organizers can create events.'
         422:
           description: 'Validation error'
           content:
@@ -835,11 +859,11 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'No query results for model [App\Models\Event] 99'
+                  message: 'Resource not found.'
                 properties:
                   message:
                     type: string
-                    example: 'No query results for model [App\Models\Event] 99'
+                    example: 'Resource not found.'
       tags:
         - Events
       security: []
@@ -948,11 +972,11 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'No query results for model [App\Models\Event] 99'
+                  message: 'Resource not found.'
                 properties:
                   message:
                     type: string
-                    example: 'No query results for model [App\Models\Event] 99'
+                    example: 'Resource not found.'
       tags:
         - Events
       requestBody:
@@ -1042,11 +1066,11 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'No query results for model [App\Models\Event] 99'
+                  message: 'Resource not found.'
                 properties:
                   message:
                     type: string
-                    example: 'No query results for model [App\Models\Event] 99'
+                    example: 'Resource not found.'
       tags:
         - Events
     parameters:
@@ -1096,6 +1120,18 @@ paths:
                         name:
                           type: string
                           example: 'Player One'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
         404:
           description: 'Event not found'
           content:
@@ -1103,14 +1139,13 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'No query results for model [App\Models\Event] 99'
+                  message: 'Resource not found.'
                 properties:
                   message:
                     type: string
-                    example: 'No query results for model [App\Models\Event] 99'
+                    example: 'Resource not found.'
       tags:
         - Participants
-      security: []
     post:
       summary: 'Join an event.'
       operationId: joinAnEvent
@@ -1237,11 +1272,11 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'No query results for model [App\Models\Event] 99'
+                  message: 'Resource not found.'
                 properties:
                   message:
                     type: string
-                    example: 'No query results for model [App\Models\Event] 99'
+                    example: 'Resource not found.'
       tags:
         - Participants
     parameters:
@@ -1634,6 +1669,18 @@ paths:
                   joined_events_count:
                     type: integer
                     example: 12
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
         404:
           description: 'User not found'
           content:
@@ -1641,14 +1688,13 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'No query results for model [App\Models\User] 99'
+                  message: 'Resource not found.'
                 properties:
                   message:
                     type: string
-                    example: 'No query results for model [App\Models\User] 99'
+                    example: 'Resource not found.'
       tags:
         - Players
-      security: []
     parameters:
       -
         in: path
