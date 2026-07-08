@@ -446,7 +446,6 @@ paths:
                     -
                       id: 1
                       title: 'Pokémon Regional Championship'
-                      description: 'A competitive tournament open to all trainers.'
                       location: Barcelona
                       entry_fee: 10.0
                       max_players: 32
@@ -476,7 +475,6 @@ paths:
                       -
                         id: 1
                         title: 'Pokémon Regional Championship'
-                        description: 'A competitive tournament open to all trainers.'
                         location: Barcelona
                         entry_fee: 10
                         max_players: 32
@@ -498,9 +496,6 @@ paths:
                         title:
                           type: string
                           example: 'Pokémon Regional Championship'
-                        description:
-                          type: string
-                          example: 'A competitive tournament open to all trainers.'
                         location:
                           type: string
                           example: Barcelona
@@ -585,7 +580,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: upcoming
+                  example: cancelled
                   enum:
                     - upcoming
                     - ongoing
@@ -594,14 +589,14 @@ paths:
                 price:
                   type: string
                   description: ''
-                  example: paid
+                  example: free
                   enum:
                     - free
                     - paid
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-07-07T19:48:33'
+                  example: '2026-07-08T08:48:49'
                 search:
                   type: string
                   description: 'Must not be greater than 100 characters.'

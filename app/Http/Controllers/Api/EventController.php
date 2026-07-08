@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
+use App\Http\Resources\EventSummaryResource;
 use App\Models\Event;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -33,7 +34,6 @@ class EventController extends Controller
      *     {
      *       "id": 1,
      *       "title": "Pokémon Regional Championship",
-     *       "description": "A competitive tournament open to all trainers.",
      *       "location": "Barcelona",
      *       "entry_fee": 10.00,
      *       "max_players": 32,
@@ -71,7 +71,7 @@ class EventController extends Controller
             ->latest()
             ->paginate(20);
 
-        return EventResource::collection($events);
+        return EventSummaryResource::collection($events);
     }
 
     /**

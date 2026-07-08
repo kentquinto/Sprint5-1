@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "TCG Manager API",
-        "_postman_id": "5f8f0035-4216-4148-a34d-6a124cbd713e",
+        "_postman_id": "7c40bab8-fcd3-4705-86ef-6becc98679cd",
         "description": "REST API for TCG Manager \u2014 a tournament management platform for Trading Card Game players and organizers. Supports event discovery, creation, and participation across 13 supported games including Pok\u00e9mon, Yu-Gi-Oh!, Magic: The Gathering, and more.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -301,7 +301,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"game\":16,\"status\":\"upcoming\",\"price\":\"paid\",\"date\":\"2026-07-07T19:48:33\",\"search\":\"n\",\"location\":\"g\"}"
+                            "raw": "{\"game\":16,\"status\":\"cancelled\",\"price\":\"free\",\"date\":\"2026-07-08T08:48:49\",\"search\":\"n\",\"location\":\"g\"}"
                         },
                         "description": "Returns a paginated list of all events (20 per page). Use the query parameters to filter the results.",
                         "auth": {
@@ -312,7 +312,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"Pok\u00e9mon Regional Championship\",\n      \"description\": \"A competitive tournament open to all trainers.\",\n      \"location\": \"Barcelona\",\n      \"entry_fee\": 10.00,\n      \"max_players\": 32,\n      \"date_time\": \"2026-12-01 14:00:00\",\n      \"status\": \"upcoming\",\n      \"participants_count\": 12,\n      \"game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" },\n      \"creator\": { \"id\": 2, \"name\": \"Player One\" }\n    }\n  ],\n  \"links\": { \"first\": \"...\", \"last\": \"...\", \"prev\": null, \"next\": null },\n  \"meta\": { \"current_page\": 1, \"last_page\": 1, \"per_page\": 20, \"total\": 1 }\n}",
+                            "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"Pok\u00e9mon Regional Championship\",\n      \"location\": \"Barcelona\",\n      \"entry_fee\": 10.00,\n      \"max_players\": 32,\n      \"date_time\": \"2026-12-01 14:00:00\",\n      \"status\": \"upcoming\",\n      \"participants_count\": 12,\n      \"game\": { \"id\": 1, \"name\": \"Pok\u00e9mon\" },\n      \"creator\": { \"id\": 2, \"name\": \"Player One\" }\n    }\n  ],\n  \"links\": { \"first\": \"...\", \"last\": \"...\", \"prev\": null, \"next\": null },\n  \"meta\": { \"current_page\": 1, \"last_page\": 1, \"per_page\": 20, \"total\": 1 }\n}",
                             "name": ""
                         }
                     ]

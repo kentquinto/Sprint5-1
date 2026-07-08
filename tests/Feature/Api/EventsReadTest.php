@@ -30,7 +30,7 @@ it('returns all events', function () {
 
     $response->assertStatus(200)
              ->assertJsonCount(2, 'data')
-             ->assertJsonStructure(['data' => [['id', 'title', 'description', 'location', 'entry_fee', 'max_players', 'date_time', 'status', 'game', 'creator']]]);
+             ->assertJsonStructure(['data' => [['id', 'title', 'location', 'entry_fee', 'max_players', 'date_time', 'status', 'game', 'creator']]]);
 });
 
 it('returns event details with GET /api/events/{id}', function () {
