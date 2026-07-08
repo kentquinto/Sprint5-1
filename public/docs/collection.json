@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "TCG Manager API",
-        "_postman_id": "a2b71da9-05bf-4114-a668-3105da06b188",
+        "_postman_id": "5f8f0035-4216-4148-a34d-6a124cbd713e",
         "description": "REST API for TCG Manager \u2014 a tournament management platform for Trading Card Game players and organizers. Supports event discovery, creation, and participation across 13 supported games including Pok\u00e9mon, Yu-Gi-Oh!, Magic: The Gathering, and more.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -301,7 +301,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"game\":16,\"status\":\"cancelled\",\"price\":\"free\",\"date\":\"2026-07-07T14:25:47\",\"search\":\"n\",\"location\":\"g\"}"
+                            "raw": "{\"game\":16,\"status\":\"upcoming\",\"price\":\"paid\",\"date\":\"2026-07-07T19:48:33\",\"search\":\"n\",\"location\":\"g\"}"
                         },
                         "description": "Returns a paginated list of all events (20 per page). Use the query parameters to filter the results.",
                         "auth": {
@@ -361,7 +361,7 @@
                         {
                             "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -475,7 +475,7 @@
                         {
                             "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -533,7 +533,7 @@
                         {
                             "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -573,10 +573,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "Returns all players who have joined a specific event.",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": "Returns all players who have joined a specific event."
                     },
                     "response": [
                         {
@@ -587,8 +584,14 @@
                         },
                         {
                             "header": [],
+                            "code": 401,
+                            "body": "{ \"message\": \"Unauthenticated.\" }",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -716,7 +719,7 @@
                         {
                             "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\Event] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "Event not found"
                         }
                     ]
@@ -852,10 +855,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "Returns a player's public profile including their bio, country, favourite game and event statistics.",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": "Returns a player's public profile including their bio, country, favourite game and event statistics."
                     },
                     "response": [
                         {
@@ -866,8 +866,14 @@
                         },
                         {
                             "header": [],
+                            "code": 401,
+                            "body": "{ \"message\": \"Unauthenticated.\" }",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
                             "code": 404,
-                            "body": "{ \"message\": \"No query results for model [App\\\\Models\\\\User] 99\" }",
+                            "body": "{ \"message\": \"Resource not found.\" }",
                             "name": "User not found"
                         }
                     ]

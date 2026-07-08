@@ -1,201 +1,19 @@
-name: Authentication
+name: Dashboard
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: api/register
+      - GET
+    uri: api/me/organized-events
     metadata:
       custom: []
-      groupName: Authentication
+      groupName: Dashboard
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Register a new account.'
-      description: 'Creates a new player account and returns a Bearer token you can use immediately.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: 'Your display name. Min 2, max 255 characters.'
-        required: true
-        example: 'Player One'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      email:
-        custom: []
-        name: email
-        description: 'A valid, unique email address.'
-        required: true
-        example: test@example.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      password:
-        custom: []
-        name: password
-        description: 'Min 8 characters.'
-        required: true
-        example: yourpassword
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      role:
-        custom: []
-        name: role
-        description: 'Optional. `player` (default) or `organizer`. Players can join events; organizers can also create, edit and delete their own events.'
-        required: false
-        example: organizer
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      password_confirmation:
-        custom: []
-        name: password_confirmation
-        description: 'Must match `password`.'
-        required: true
-        example: yourpassword
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      name: 'Player One'
-      email: test@example.com
-      password: yourpassword
-      role: organizer
-      password_confirmation: yourpassword
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-            "message": "User registered successfully",
-            "token": "eyJ0eXAiOiJKV1QiLCJhbGci..."
-          }
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-            "message": "The email has already been taken.",
-            "errors": { "email": ["The email has already been taken."] }
-          }
-        headers: []
-        description: 'Validation error'
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/login
-    metadata:
-      custom: []
-      groupName: Authentication
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Log in.'
-      description: 'Returns a Bearer token for an existing account.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      email:
-        custom: []
-        name: email
-        description: 'A valid email address.'
-        required: true
-        example: test@example.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      password:
-        custom: []
-        name: password
-        description: 'Your account password.'
-        required: true
-        example: yourpassword
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      email: test@example.com
-      password: yourpassword
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-            "message": "Logged in successfully",
-            "token": "eyJ0eXAiOiJKV1QiLCJhbGci..."
-          }
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 401
-        content: '{ "message": "Invalid credentials" }'
-        headers: []
-        description: 'Wrong credentials'
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/logout
-    metadata:
-      custom: []
-      groupName: Authentication
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Log out.'
-      description: 'Revokes the current Bearer token. The token will no longer work after this call.'
+      title: 'Your organized events.'
+      description: 'Returns a paginated list of all events you have created as an organizer (20 per page).'
       authenticated: true
       deprecated: false
     headers:
@@ -204,8 +22,20 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      page:
+        custom: []
+        name: page
+        description: 'Page number.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      page: 1
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -213,7 +43,104 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{ "message": "Logged out successfully" }'
+        content: |-
+          {
+            "data": [
+              {
+                "id": 1,
+                "title": "Pokémon Regional Championship",
+                "description": "A competitive tournament open to all trainers.",
+                "location": "Barcelona",
+                "entry_fee": 10.00,
+                "max_players": 32,
+                "date_time": "2026-12-01 14:00:00",
+                "status": "upcoming",
+                "participants_count": 12,
+                "game": { "id": 1, "name": "Pokémon" },
+                "creator": { "id": 1, "name": "Player One" }
+              }
+            ],
+            "links": { "first": "...", "last": "...", "prev": null, "next": null },
+            "meta": { "current_page": 1, "last_page": 1, "per_page": 20, "total": 1 }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{ "message": "Unauthenticated." }'
+        headers: []
+        description: Unauthenticated
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/me/joined-events
+    metadata:
+      custom: []
+      groupName: Dashboard
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Your joined events.'
+      description: 'Returns a paginated list of all events you have joined as a participant (20 per page).'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      page:
+        custom: []
+        name: page
+        description: 'Page number.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "data": [
+              {
+                "id": 3,
+                "title": "Yu-Gi-Oh! Spring Showdown",
+                "description": "Bring your best deck.",
+                "location": "Madrid",
+                "entry_fee": 5.00,
+                "max_players": 16,
+                "date_time": "2026-11-15 10:00:00",
+                "status": "upcoming",
+                "participants_count": 8,
+                "game": { "id": 2, "name": "Yu-Gi-Oh!" },
+                "creator": { "id": 4, "name": "Player Three" }
+              }
+            ],
+            "links": { "first": "...", "last": "...", "prev": null, "next": null },
+            "meta": { "current_page": 1, "last_page": 1, "per_page": 20, "total": 1 }
+          }
         headers: []
         description: ''
       -

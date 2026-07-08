@@ -126,7 +126,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: cancelled
+        example: upcoming
         type: string
         enumValues:
           - upcoming
@@ -141,7 +141,7 @@ endpoints:
         name: price
         description: ''
         required: false
-        example: free
+        example: paid
         type: string
         enumValues:
           - free
@@ -154,7 +154,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-07-07T14:25:47'
+        example: '2026-07-07T19:48:33'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -184,9 +184,9 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       game: 16
-      status: cancelled
-      price: free
-      date: '2026-07-07T14:25:47'
+      status: upcoming
+      price: paid
+      date: '2026-07-07T19:48:33'
       search: 'n'
       location: g
     fileParameters: []
@@ -281,7 +281,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{ "message": "No query results for model [App\\Models\\Event] 99" }'
+        content: '{ "message": "Resource not found." }'
         headers: []
         description: 'Event not found'
     responseFields: []
@@ -606,7 +606,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{ "message": "No query results for model [App\\Models\\Event] 99" }'
+        content: '{ "message": "Resource not found." }'
         headers: []
         description: 'Event not found'
     responseFields: []
@@ -677,7 +677,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{ "message": "No query results for model [App\\Models\\Event] 99" }'
+        content: '{ "message": "Resource not found." }'
         headers: []
         description: 'Event not found'
     responseFields: []

@@ -18,7 +18,7 @@ class ParticipantController extends Controller
      * Returns all players who have joined a specific event.
      *
      * @group Participants
-     * @unauthenticated
+     * @authenticated
      *
      * @urlParam event_id integer required The event ID. Example: 1
      *
@@ -28,7 +28,8 @@ class ParticipantController extends Controller
      *     { "id": 3, "name": "Player Two" }
      *   ]
      * }
-     * @response 404 scenario="Event not found" { "message": "No query results for model [App\\Models\\Event] 99" }
+     * @response 401 scenario="Unauthenticated" { "message": "Unauthenticated." }
+     * @response 404 scenario="Event not found" { "message": "Resource not found." }
      */
     public function index(Event $event): AnonymousResourceCollection
     {
@@ -97,7 +98,7 @@ class ParticipantController extends Controller
      * @response 204 scenario="Left successfully" {}
      * @response 401 scenario="Unauthenticated" { "message": "Unauthenticated." }
      * @response 403 scenario="Not a participant" { "message": "You are not a participant of this event." }
-     * @response 404 scenario="Event not found" { "message": "No query results for model [App\\Models\\Event] 99" }
+     * @response 404 scenario="Event not found" { "message": "Resource not found." }
      */
     public function destroy(Request $request, Event $event): JsonResponse|Response
     {

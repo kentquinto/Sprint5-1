@@ -1153,9 +1153,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"game\": 16,
-    \"status\": \"cancelled\",
-    \"price\": \"free\",
-    \"date\": \"2026-07-07T14:25:47\",
+    \"status\": \"upcoming\",
+    \"price\": \"paid\",
+    \"date\": \"2026-07-07T19:48:33\",
     \"search\": \"n\",
     \"location\": \"g\"
 }"
@@ -1186,9 +1186,9 @@ const headers = {
 
 let body = {
     "game": 16,
-    "status": "cancelled",
-    "price": "free",
-    "date": "2026-07-07T14:25:47",
+    "status": "upcoming",
+    "price": "paid",
+    "date": "2026-07-07T19:48:33",
     "search": "n",
     "location": "g"
 };
@@ -1420,10 +1420,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="GETapi-events"
-               value="cancelled"
+               value="upcoming"
                data-component="body">
     <br>
-<p>Example: <code>cancelled</code></p>
+<p>Example: <code>upcoming</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>upcoming</code></li> <li><code>ongoing</code></li> <li><code>finished</code></li> <li><code>cancelled</code></li></ul>
         </div>
@@ -1434,10 +1434,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="price"                data-endpoint="GETapi-events"
-               value="free"
+               value="paid"
                data-component="body">
     <br>
-<p>Example: <code>free</code></p>
+<p>Example: <code>paid</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>free</code></li> <li><code>paid</code></li></ul>
         </div>
@@ -1448,10 +1448,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="GETapi-events"
-               value="2026-07-07T14:25:47"
+               value="2026-07-07T19:48:33"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-07-07T14:25:47</code></p>
+<p>Must be a valid date. Example: <code>2026-07-07T19:48:33</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
@@ -1547,7 +1547,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Event] 99&quot;
+    &quot;message&quot;: &quot;Resource not found.&quot;
 }</code>
  </pre>
     </span>
@@ -2034,7 +2034,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Event] 99&quot;
+    &quot;message&quot;: &quot;Resource not found.&quot;
 }</code>
  </pre>
     </span>
@@ -2291,7 +2291,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Event] 99&quot;
+    &quot;message&quot;: &quot;Resource not found.&quot;
 }</code>
  </pre>
     </span>
@@ -2400,6 +2400,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                                 <h2 id="participants-GETapi-events--event_id--participants">List participants.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Returns all players who have joined a specific event.</p>
@@ -2411,6 +2412,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/events/1/participants" \
+    --header "Authorization: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -2421,6 +2423,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_TOKEN}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2453,12 +2456,21 @@ fetch(url, {
 }</code>
  </pre>
             <blockquote>
+            <p>Example response (401, Unauthenticated):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
             <p>Example response (404, Event not found):</p>
         </blockquote>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Event] 99&quot;
+    &quot;message&quot;: &quot;Resource not found.&quot;
 }</code>
  </pre>
     </span>
@@ -2479,7 +2491,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-events--event_id--participants" data-method="GET"
       data-path="api/events/{event_id}/participants"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2509,6 +2521,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/events/{event_id}/participants</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-events--event_id--participants"
+               value="Bearer {YOUR_AUTH_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_TOKEN}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2819,7 +2843,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Event] 99&quot;
+    &quot;message&quot;: &quot;Resource not found.&quot;
 }</code>
  </pre>
     </span>
@@ -3322,6 +3346,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                                 <h2 id="players-GETapi-players--user_id-">Get a player&#039;s public profile.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Returns a player's public profile including their bio, country, favourite game and event statistics.</p>
@@ -3333,6 +3358,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/players/1" \
+    --header "Authorization: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -3343,6 +3369,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_TOKEN}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -3375,12 +3402,21 @@ fetch(url, {
 }</code>
  </pre>
             <blockquote>
+            <p>Example response (401, Unauthenticated):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
             <p>Example response (404, User not found):</p>
         </blockquote>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\User] 99&quot;
+    &quot;message&quot;: &quot;Resource not found.&quot;
 }</code>
  </pre>
     </span>
@@ -3401,7 +3437,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-players--user_id-" data-method="GET"
       data-path="api/players/{user_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3431,6 +3467,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/players/{user_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-players--user_id-"
+               value="Bearer {YOUR_AUTH_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_TOKEN}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;

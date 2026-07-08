@@ -1,27 +1,39 @@
-name: Profile
+name: Participants
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/me
+    uri: 'api/events/{event_id}/participants'
     metadata:
       custom: []
-      groupName: Profile
+      groupName: Participants
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get your profile.'
-      description: "Returns the authenticated user's own profile, including their favorite game."
+      title: 'List participants.'
+      description: 'Returns all players who have joined a specific event.'
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The event ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -33,13 +45,10 @@ endpoints:
         status: 200
         content: |-
           {
-            "id": 1,
-            "name": "Player One",
-            "email": "test@example.com",
-            "role": "organizer",
-            "bio": "Pokémon TCG player since 2010.",
-            "country": "ES",
-            "favorite_game": { "id": 1, "name": "Pokémon" }
+            "data": [
+              { "id": 2, "name": "Player One" },
+              { "id": 3, "name": "Player Two" }
+            ]
           }
         headers: []
         description: ''
@@ -49,6 +58,12 @@ endpoints:
         content: '{ "message": "Unauthenticated." }'
         headers: []
         description: Unauthenticated
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "Resource not found." }'
+        headers: []
+        description: 'Event not found'
     responseFields: []
     auth:
       - headers
@@ -60,91 +75,53 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - PUT
-    uri: api/me
+      - POST
+    uri: 'api/events/{event_id}/participants'
     metadata:
       custom: []
-      groupName: Profile
+      groupName: Participants
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update your profile.'
-      description: "Updates one or more fields on the authenticated user's profile. All fields are optional — only send what you want to change."
+      title: 'Join an event.'
+      description: |-
+        Registers the authenticated user as a participant in an event.
+
+        **Business rules:**
+        - You cannot join your own event.
+        - You cannot join the same event twice.
+        - You cannot join a full event.
+        - You cannot join a finished or cancelled event.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
+    urlParameters:
+      event_id:
         custom: []
-        name: name
-        description: 'Your new display name.'
-        required: false
-        example: 'Player One'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      bio:
-        custom: []
-        name: bio
-        description: 'A short bio shown on your public profile.'
-        required: false
-        example: 'Pokémon TCG player since 2010.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      country:
-        custom: []
-        name: country
-        description: 'A 2–10 character country code or name.'
-        required: false
-        example: ES
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      favorite_game_id:
-        custom: []
-        name: favorite_game_id
-        description: 'The ID of your favourite game (must exist in `/api/games`). Pass `null` to clear it.'
-        required: false
+        name: event_id
+        description: 'The event ID.'
+        required: true
         example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: true
-        nullable: true
+        nullable: false
         deprecated: false
-    cleanBodyParameters:
-      name: 'Player One'
-      bio: 'Pokémon TCG player since 2010.'
-      country: ES
-      favorite_game_id: 1
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
-        content: |-
-          {
-            "id": 1,
-            "name": "Player One",
-            "email": "test@example.com",
-            "role": "organizer",
-            "bio": "Pokémon TCG player since 2010.",
-            "country": "ES",
-            "favorite_game": { "id": 1, "name": "Pokémon" }
-          }
+        status: 201
+        content: '{ "id": 1, "name": "Player One" }'
         headers: []
         description: ''
       -
@@ -153,6 +130,101 @@ endpoints:
         content: '{ "message": "Unauthenticated." }'
         headers: []
         description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{ "message": "You cannot join your own event." }'
+        headers: []
+        description: 'Own event'
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "You have already joined this event." }'
+        headers: []
+        description: 'Already joined'
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "This event is at full capacity." }'
+        headers: []
+        description: 'Event full'
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "This event is no longer accepting participants." }'
+        headers: []
+        description: 'Event closed'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/events/{event_id}/participants'
+    metadata:
+      custom: []
+      groupName: Participants
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Leave an event.'
+      description: "Removes the authenticated user from the event's participant list."
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The event ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: '{}'
+        headers: []
+        description: 'Left successfully'
+      -
+        custom: []
+        status: 401
+        content: '{ "message": "Unauthenticated." }'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{ "message": "You are not a participant of this event." }'
+        headers: []
+        description: 'Not a participant'
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "Resource not found." }'
+        headers: []
+        description: 'Event not found'
     responseFields: []
     auth:
       - headers
