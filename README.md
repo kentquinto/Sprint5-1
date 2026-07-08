@@ -99,8 +99,8 @@ DB_CONNECTION=sqlite
 # Create the SQLite file (skip if using MySQL)
 # Mac/Linux:
 touch database/database.sqlite
-# Windows:
-# echo. > database/database.sqlite
+# Windows (PowerShell):
+# New-Item -ItemType File -Path "database/database.sqlite" -Force
 
 # Run migrations — Passport OAuth tables are already included in this repo
 php artisan migrate
