@@ -199,7 +199,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 7, 2026</li>
+        <li>Last updated: July 8, 2026</li>
     </ul>
 </div>
 
@@ -1153,9 +1153,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"game\": 16,
-    \"status\": \"upcoming\",
-    \"price\": \"paid\",
-    \"date\": \"2026-07-07T19:48:33\",
+    \"status\": \"cancelled\",
+    \"price\": \"free\",
+    \"date\": \"2026-07-08T08:48:49\",
     \"search\": \"n\",
     \"location\": \"g\"
 }"
@@ -1186,9 +1186,9 @@ const headers = {
 
 let body = {
     "game": 16,
-    "status": "upcoming",
-    "price": "paid",
-    "date": "2026-07-07T19:48:33",
+    "status": "cancelled",
+    "price": "free",
+    "date": "2026-07-08T08:48:49",
     "search": "n",
     "location": "g"
 };
@@ -1212,7 +1212,6 @@ fetch(url, {
         {
             &quot;id&quot;: 1,
             &quot;title&quot;: &quot;Pok&eacute;mon Regional Championship&quot;,
-            &quot;description&quot;: &quot;A competitive tournament open to all trainers.&quot;,
             &quot;location&quot;: &quot;Barcelona&quot;,
             &quot;entry_fee&quot;: 10,
             &quot;max_players&quot;: 32,
@@ -1420,10 +1419,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="GETapi-events"
-               value="upcoming"
+               value="cancelled"
                data-component="body">
     <br>
-<p>Example: <code>upcoming</code></p>
+<p>Example: <code>cancelled</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>upcoming</code></li> <li><code>ongoing</code></li> <li><code>finished</code></li> <li><code>cancelled</code></li></ul>
         </div>
@@ -1434,10 +1433,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="price"                data-endpoint="GETapi-events"
-               value="paid"
+               value="free"
                data-component="body">
     <br>
-<p>Example: <code>paid</code></p>
+<p>Example: <code>free</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>free</code></li> <li><code>paid</code></li></ul>
         </div>
@@ -1448,10 +1447,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="GETapi-events"
-               value="2026-07-07T19:48:33"
+               value="2026-07-08T08:48:49"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-07-07T19:48:33</code></p>
+<p>Must be a valid date. Example: <code>2026-07-08T08:48:49</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;

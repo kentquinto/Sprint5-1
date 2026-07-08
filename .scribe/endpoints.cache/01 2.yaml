@@ -126,7 +126,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: cancelled
+        example: upcoming
         type: string
         enumValues:
           - upcoming
@@ -141,7 +141,7 @@ endpoints:
         name: price
         description: ''
         required: false
-        example: free
+        example: paid
         type: string
         enumValues:
           - free
@@ -154,7 +154,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-07-08T08:48:49'
+        example: '2026-07-07T19:48:33'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -184,9 +184,9 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       game: 16
-      status: cancelled
-      price: free
-      date: '2026-07-08T08:48:49'
+      status: upcoming
+      price: paid
+      date: '2026-07-07T19:48:33'
       search: 'n'
       location: g
     fileParameters: []
@@ -200,6 +200,7 @@ endpoints:
               {
                 "id": 1,
                 "title": "Pokémon Regional Championship",
+                "description": "A competitive tournament open to all trainers.",
                 "location": "Barcelona",
                 "entry_fee": 10.00,
                 "max_players": 32,
