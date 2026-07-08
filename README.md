@@ -44,7 +44,7 @@ This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed
 | Language | PHP 8.3+ |
 | Authentication | Laravel Passport 13 (OAuth2 Bearer tokens) |
 | Database | SQLite (local) · MySQL (production) |
-| Testing | Pest 4.7 — 86 tests, 252 assertions |
+| Testing | Pest 4.7 — 97 tests, 281 assertions |
 | Documentation | Scribe 5.11 |
 | Architecture | REST, MVC, Repository-light, TDD |
 
@@ -330,8 +330,8 @@ php artisan test
 ```
 
 ```
-Tests:    86 passed
-Assertions: 252
+Tests:    97 passed
+Assertions: 281
 Duration:  ~1.5s
 ```
 
@@ -372,7 +372,7 @@ routes/
 └── api.php       # 20 routes — public + auth:api protected group
 
 tests/Feature/Api/
-└── ...           # 86 Pest tests
+└── ...           # 97 Pest tests
 ```
 
 ---
