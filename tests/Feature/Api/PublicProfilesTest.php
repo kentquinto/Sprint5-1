@@ -38,7 +38,8 @@ it('returns 404 for a non-existent player', function () {
         'Authorization' => "Bearer {$this->token}",
     ]);
 
-    $response->assertStatus(404);
+    $response->assertStatus(404)
+             ->assertJson(['message' => 'Resource not found.']);
 });
 
 it('requires authentication to view a player profile', function () {

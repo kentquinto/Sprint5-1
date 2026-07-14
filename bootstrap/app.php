@@ -17,8 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        // Laravel converts ModelNotFoundException (route model binding misses)
+        // into Symfony's NotFoundHttpException before render callbacks run,
+        // so this catches both bad IDs and unknown api/* URLs.
         $exceptions->render(function (
-            \Illuminate\Database\Eloquent\ModelNotFoundException $e,
+            \Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e,
             \Illuminate\Http\Request $request
         ) {
             if ($request->is('api/*')) {

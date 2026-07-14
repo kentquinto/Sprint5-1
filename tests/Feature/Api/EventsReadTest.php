@@ -46,7 +46,8 @@ it('returns event details with GET /api/events/{id}', function () {
 it('returns 404 for a non-existent event', function () {
     $response = $this->getJson('/api/events/999');
 
-    $response->assertStatus(404);
+    $response->assertStatus(404)
+             ->assertJson(['message' => 'Resource not found.']);
 });
 
 it('filters events by game', function () {
