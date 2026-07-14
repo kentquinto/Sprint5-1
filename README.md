@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/Laravel-13-FF2D20?style=for-the-badge&logo=laravel&logoColor=white">
   <img src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php&logoColor=white">
   <img src="https://img.shields.io/badge/Passport-13-orange?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Tests-97%20passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Tests-72%20passing-brightgreen?style=for-the-badge">
 </p>
 
 ---
@@ -44,9 +44,9 @@ This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed
 | Language | PHP 8.3+ |
 | Authentication | Laravel Passport 13 (OAuth2 Bearer tokens) |
 | Database | SQLite (local) · MySQL (production) |
-| Testing | Pest 4.7 — 97 tests, 281 assertions |
+| Testing | Pest 4.7 — 72 tests, 221 assertions |
 | Documentation | Scribe 5.11 |
-| Architecture | REST, MVC, Repository-light, TDD |
+| Architecture | REST API, TDD |
 
 ---
 
@@ -330,8 +330,8 @@ php artisan test
 ```
 
 ```
-Tests:    97 passed
-Assertions: 281
+Tests:    72 passed
+Assertions: 221
 Duration:  ~1.5s
 ```
 
@@ -353,10 +353,12 @@ app/
 │   │   ├── GameController.php        # index
 │   │   └── StatisticsController.php  # players, games, organizers
 │   └── Resources/
-│       ├── EventResource.php         # controls event JSON shape
+│       ├── EventResource.php         # full event JSON shape (detailed)
+│       ├── EventSummaryResource.php  # event list shape (no description)
 │       ├── UserResource.php          # private profile shape
 │       ├── PublicProfileResource.php # public profile shape
-│       └── ParticipantResource.php   # participant shape
+│       ├── ParticipantResource.php   # participant shape
+│       └── GameResource.php          # game shape
 ├── Models/
 │   ├── Event.php     # belongsTo Game, User · belongsToMany participants
 │   ├── User.php      # hasMany createdEvents · belongsToMany events
@@ -372,7 +374,7 @@ routes/
 └── api.php       # 20 routes — public + auth:api protected group
 
 tests/Feature/Api/
-└── ...           # 97 Pest tests
+└── ...           # 72 Pest tests
 ```
 
 ---
