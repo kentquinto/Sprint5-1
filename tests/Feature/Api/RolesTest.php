@@ -22,21 +22,21 @@ beforeEach(function () {
 
 it('registers as player by default when no role is provided', function () {
     $response = $this->postJson('/api/register', [
-        'name'                  => 'Kent',
-        'email'                 => 'kent@test.com',
+        'name'                  => 'user1',
+        'email'                 => 'user1@example.com',
         'password'              => 'password',
         'password_confirmation' => 'password',
     ]);
 
     $response->assertStatus(201);
 
-    $this->assertDatabaseHas('users', ['email' => 'kent@test.com', 'role' => 'player']);
+    $this->assertDatabaseHas('users', ['email' => 'user1@example.com', 'role' => 'player']);
 });
 
 it('can register as an organizer', function () {
     $response = $this->postJson('/api/register', [
-        'name'                  => 'Kent',
-        'email'                 => 'kent@test.com',
+        'name'                  => 'user1',
+        'email'                 => 'user1@example.com',
         'password'              => 'password',
         'password_confirmation' => 'password',
         'role'                  => 'organizer',
@@ -44,13 +44,13 @@ it('can register as an organizer', function () {
 
     $response->assertStatus(201);
 
-    $this->assertDatabaseHas('users', ['email' => 'kent@test.com', 'role' => 'organizer']);
+    $this->assertDatabaseHas('users', ['email' => 'user1@example.com', 'role' => 'organizer']);
 });
 
 it('rejects invalid role on registration', function () {
     $response = $this->postJson('/api/register', [
-        'name'                  => 'Kent',
-        'email'                 => 'kent@test.com',
+        'name'                  => 'user1',
+        'email'                 => 'user1@example.com',
         'password'              => 'password',
         'password_confirmation' => 'password',
         'role'                  => 'admin',
