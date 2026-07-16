@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -34,15 +37,8 @@ class AuthController extends Controller
      *   "errors": { "email": ["The email has already been taken."] }
      * }
      */
-    public function register(Request $request): JsonResponse
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $request->validate([
-            'name'     => 'required|string|min:2|max:255',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:8',
-            'role'     => 'sometimes|in:player,organizer',
-        ]);
-
         $user = User::create($request->only(['name', 'email', 'password', 'role']));
 
         return response()->json(['message' => 'User registered successfully', 'token' => $this->issueToken($user)], 201);
@@ -65,13 +61,8 @@ class AuthController extends Controller
      * }
      * @response 401 scenario="Wrong credentials" { "message": "Invalid credentials" }
      */
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required',
-        ]);
-
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
@@ -129,15 +120,8 @@ class AuthController extends Controller
      * }
      * @response 401 scenario="Unauthenticated" { "message": "Unauthenticated." }
      */
-    public function update(Request $request): UserResource
+    public function update(UpdateProfileRequest $request): UserResource
     {
-        $request->validate([
-            'name'             => 'sometimes|string|max:255',
-            'bio'              => 'sometimes|nullable|string',
-            'country'          => 'sometimes|nullable|string|max:10',
-            'favorite_game_id' => 'sometimes|nullable|exists:games,id',
-        ]);
-
         $request->user()->update($request->only(['name', 'bio', 'country', 'favorite_game_id']));
 
         return new UserResource($request->user()->fresh()->load('favoriteGame'));
