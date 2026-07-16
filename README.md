@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/Laravel-13-FF2D20?style=for-the-badge&logo=laravel&logoColor=white">
   <img src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php&logoColor=white">
   <img src="https://img.shields.io/badge/Passport-13-orange?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Tests-72%20passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Tests-79%20passing-brightgreen?style=for-the-badge">
 </p>
 
 ---
@@ -44,7 +44,7 @@ This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed
 | Language | PHP 8.3+ |
 | Authentication | Laravel Passport 13 (OAuth2 Bearer tokens) |
 | Database | SQLite (local) · MySQL (production) |
-| Testing | Pest 4.7 — 72 tests, 221 assertions |
+| Testing | Pest 4.7 — 79 tests, 239 assertions |
 | Documentation | Scribe 5.11 |
 | Architecture | REST API, TDD |
 
@@ -183,6 +183,7 @@ php artisan scribe:generate
 |---|---|---|---|
 | `GET` | `/api/me` | 🔒 | Get your own profile (includes `role`) |
 | `PUT` | `/api/me` | 🔒 | Update name, bio, country, favourite game |
+| `PUT` | `/api/me/password` | 🔒 | Change password (requires current password) |
 
 ### Events
 
@@ -330,8 +331,8 @@ php artisan test
 ```
 
 ```
-Tests:    72 passed
-Assertions: 221
+Tests:    79 passed
+Assertions: 239
 Duration:  ~1.5s
 ```
 
@@ -371,10 +372,10 @@ database/
 └── seeders/      # 13 games + sample data
 
 routes/
-└── api.php       # 20 routes — public + auth:api protected group
+└── api.php       # 21 routes — public + auth:api protected group
 
 tests/Feature/Api/
-└── ...           # 72 Pest tests
+└── ...           # 79 Pest tests
 ```
 
 ---

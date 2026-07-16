@@ -101,6 +101,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="profile-PUTapi-me">
                                 <a href="#profile-PUTapi-me">Update your profile.</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="profile-PUTapi-me-password">
+                                <a href="#profile-PUTapi-me-password">Update your password.</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-events" class="tocify-header">
@@ -199,7 +202,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 8, 2026</li>
+        <li>Last updated: July 16, 2026</li>
     </ul>
 </div>
 
@@ -1131,6 +1134,214 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                    <h2 id="profile-PUTapi-me-password">Update your password.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Changes the authenticated user's password. Requires the current password
+for confirmation. Existing tokens remain valid after the change.</p>
+
+<span id="example-requests-PUTapi-me-password">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/me/password" \
+    --header "Authorization: Bearer {YOUR_AUTH_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"current_password\": \"yourpassword\",
+    \"password\": \"new-password-123\",
+    \"password_confirmation\": \"new-password-123\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/me/password"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "current_password": "yourpassword",
+    "password": "new-password-123",
+    "password_confirmation": "new-password-123"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-me-password">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Password updated successfully&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, Unauthenticated):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Wrong current password):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The password is incorrect.&quot;,
+    &quot;errors&quot;: {
+        &quot;current_password&quot;: [
+            &quot;The password is incorrect.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-me-password" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-me-password"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-me-password"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-me-password" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-me-password">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-me-password" data-method="PUT"
+      data-path="api/me/password"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-me-password', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-me-password"
+                    onclick="tryItOut('PUTapi-me-password');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-me-password"
+                    onclick="cancelTryOut('PUTapi-me-password');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-me-password"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/me/password</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-me-password"
+               value="Bearer {YOUR_AUTH_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-me-password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-me-password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>current_password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="current_password"                data-endpoint="PUTapi-me-password"
+               value="yourpassword"
+               data-component="body">
+    <br>
+<p>Your current password. Example: <code>yourpassword</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="PUTapi-me-password"
+               value="new-password-123"
+               data-component="body">
+    <br>
+<p>The new password. Min 8 characters, must be different from the current one. Example: <code>new-password-123</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password_confirmation"                data-endpoint="PUTapi-me-password"
+               value="new-password-123"
+               data-component="body">
+    <br>
+<p>Must match <code>password</code>. Example: <code>new-password-123</code></p>
+        </div>
+        </form>
+
                 <h1 id="events">Events</h1>
 
     
@@ -1153,9 +1364,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"game\": 16,
-    \"status\": \"cancelled\",
+    \"status\": \"ongoing\",
     \"price\": \"free\",
-    \"date\": \"2026-07-08T08:48:49\",
+    \"date\": \"2026-07-16T20:33:16\",
     \"search\": \"n\",
     \"location\": \"g\"
 }"
@@ -1186,9 +1397,9 @@ const headers = {
 
 let body = {
     "game": 16,
-    "status": "cancelled",
+    "status": "ongoing",
     "price": "free",
-    "date": "2026-07-08T08:48:49",
+    "date": "2026-07-16T20:33:16",
     "search": "n",
     "location": "g"
 };
@@ -1419,10 +1630,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="GETapi-events"
-               value="cancelled"
+               value="ongoing"
                data-component="body">
     <br>
-<p>Example: <code>cancelled</code></p>
+<p>Example: <code>ongoing</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>upcoming</code></li> <li><code>ongoing</code></li> <li><code>finished</code></li> <li><code>cancelled</code></li></ul>
         </div>
@@ -1447,10 +1658,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="GETapi-events"
-               value="2026-07-08T08:48:49"
+               value="2026-07-16T20:33:16"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-07-08T08:48:49</code></p>
+<p>Must be a valid date. Example: <code>2026-07-16T20:33:16</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;

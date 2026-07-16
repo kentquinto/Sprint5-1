@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "TCG Manager API",
-        "_postman_id": "7c40bab8-fcd3-4705-86ef-6becc98679cd",
+        "_postman_id": "0c65f56c-cc25-4aa8-8df8-e0c3276cf237",
         "description": "REST API for TCG Manager \u2014 a tournament management platform for Trading Card Game players and organizers. Supports event discovery, creation, and participation across 13 supported games including Pok\u00e9mon, Yu-Gi-Oh!, Magic: The Gathering, and more.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -229,6 +229,53 @@
                             "name": "Unauthenticated"
                         }
                     ]
+                },
+                {
+                    "name": "Update your password.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/me\/password",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/me\/password"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"current_password\":\"yourpassword\",\"password\":\"new-password-123\",\"password_confirmation\":\"new-password-123\"}"
+                        },
+                        "description": "Changes the authenticated user's password. Requires the current password\nfor confirmation. Existing tokens remain valid after the change."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{ \"message\": \"Password updated successfully\" }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{ \"message\": \"Unauthenticated.\" }",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"message\": \"The password is incorrect.\",\n  \"errors\": { \"current_password\": [\"The password is incorrect.\"] }\n}",
+                            "name": "Wrong current password"
+                        }
+                    ]
                 }
             ]
         },
@@ -301,7 +348,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"game\":16,\"status\":\"cancelled\",\"price\":\"free\",\"date\":\"2026-07-08T08:48:49\",\"search\":\"n\",\"location\":\"g\"}"
+                            "raw": "{\"game\":16,\"status\":\"ongoing\",\"price\":\"free\",\"date\":\"2026-07-16T20:33:16\",\"search\":\"n\",\"location\":\"g\"}"
                         },
                         "description": "Returns a paginated list of all events (20 per page). Use the query parameters to filter the results.",
                         "auth": {
