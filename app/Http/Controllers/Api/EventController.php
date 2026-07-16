@@ -54,13 +54,12 @@ class EventController extends Controller
     {
         $events = Event::with('game', 'creator')
             ->withCount('participants')
-            ->when($request->game,     fn($q) => $q->where('game_id', $request->game))
-            ->when($request->search,   fn($q) => $q->where('title', 'like', "%{$request->search}%"))
-            ->when($request->location, fn($q) => $q->where('location', 'like', "%{$request->location}%"))
-            ->when($request->status,   fn($q) => $q->where('status', $request->status))
-            ->when($request->price === 'free', fn($q) => $q->where('entry_fee', 0))
-            ->when($request->price === 'paid', fn($q) => $q->where('entry_fee', '>', 0))
-            ->when($request->date,     fn($q) => $q->whereDate('date_time', $request->date))
+            ->forGame($request->game)
+            ->search($request->search)
+            ->inLocation($request->location)
+            ->withStatus($request->status)
+            ->priced($request->price)
+            ->onDate($request->date)
             ->latest()
             ->paginate(20);
 
