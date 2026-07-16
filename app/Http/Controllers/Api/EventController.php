@@ -134,9 +134,7 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request): JsonResponse
     {
-        if ($request->user()->role !== 'organizer') {
-            return response()->json(['message' => 'Only organizers can create events.'], 403);
-        }
+        $this->authorize('create', Event::class);
 
         $event = Event::create([
             ...$request->only(['title', 'description', 'location', 'date_time', 'max_players', 'entry_fee', 'game_id']),
