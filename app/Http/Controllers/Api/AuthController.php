@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -125,6 +126,33 @@ class AuthController extends Controller
         $request->user()->update($request->only(['name', 'bio', 'country', 'favorite_game_id']));
 
         return new UserResource($request->user()->fresh()->load('favoriteGame'));
+    }
+
+    /**
+     * Update your password.
+     *
+     * Changes the authenticated user's password. Requires the current password
+     * for confirmation. Existing tokens remain valid after the change.
+     *
+     * @group Profile
+     * @authenticated
+     *
+     * @bodyParam current_password string required Your current password. Example: yourpassword
+     * @bodyParam password string required The new password. Min 8 characters, must be different from the current one. Example: new-password-123
+     * @bodyParam password_confirmation string required Must match `password`. Example: new-password-123
+     *
+     * @response 200 { "message": "Password updated successfully" }
+     * @response 401 scenario="Unauthenticated" { "message": "Unauthenticated." }
+     * @response 422 scenario="Wrong current password" {
+     *   "message": "The password is incorrect.",
+     *   "errors": { "current_password": ["The password is incorrect."] }
+     * }
+     */
+    public function updatePassword(UpdatePasswordRequest $request): JsonResponse
+    {
+        $request->user()->update(['password' => $request->password]);
+
+        return response()->json(['message' => 'Password updated successfully']);
     }
 
     /**
