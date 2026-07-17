@@ -124,7 +124,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: cancelled
+        example: upcoming
         type: string
         enumValues:
           - upcoming
@@ -152,7 +152,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-07-17T10:19:02'
+        example: '2026-07-17T10:37:23'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -182,9 +182,9 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       game: 16
-      status: cancelled
+      status: upcoming
       price: free
-      date: '2026-07-17T10:19:02'
+      date: '2026-07-17T10:37:23'
       search: 'n'
       location: g
     fileParameters: []

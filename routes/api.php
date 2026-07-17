@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GameController;
 use App\Http\Controllers\Api\ParticipantController;
 use App\Http\Controllers\Api\PlayerController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\StatisticsController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,10 +24,10 @@ Route::post('/login',    [AuthController::class, 'login']);
 
 // ─── Protected ───────────────────────────────────────────────────────────────
 Route::middleware('auth:api')->group(function () {
-    Route::get('/me',                          [AuthController::class,       'me']);
-    Route::put('/me',                          [AuthController::class,       'update']);
-    Route::put('/me/password',                 [AuthController::class,       'updatePassword']);
-    Route::delete('/me',                       [AuthController::class,       'deleteAccount']);
+    Route::get('/me',                          [ProfileController::class,    'me']);
+    Route::put('/me',                          [ProfileController::class,    'update']);
+    Route::put('/me/password',                 [ProfileController::class,    'updatePassword']);
+    Route::delete('/me',                       [ProfileController::class,    'deleteAccount']);
     Route::post('/logout',                     [AuthController::class,       'logout']);
     Route::get('/me/organized-events',         [DashboardController::class,  'organizedEvents']);
     Route::get('/me/joined-events',            [DashboardController::class,  'joinedEvents']);
