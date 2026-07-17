@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/me',                          [AuthController::class,       'me']);
     Route::put('/me',                          [AuthController::class,       'update']);
     Route::put('/me/password',                 [AuthController::class,       'updatePassword']);
+    Route::delete('/me',                       [AuthController::class,       'deleteAccount']);
     Route::post('/logout',                     [AuthController::class,       'logout']);
     Route::get('/me/organized-events',         [DashboardController::class,  'organizedEvents']);
     Route::get('/me/joined-events',            [DashboardController::class,  'joinedEvents']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DeleteAccountRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdatePasswordRequest;
@@ -153,6 +154,37 @@ class AuthController extends Controller
         $request->user()->update(['password' => $request->password]);
 
         return response()->json(['message' => 'Password updated successfully']);
+    }
+
+    /**
+     * Delete your account.
+     *
+     * Permanently deletes the authenticated user's account. Requires the current
+     * password for confirmation. Events you organized are deleted with the
+     * account; your participations in other events are removed.
+     *
+     * @group Profile
+     * @authenticated
+     *
+     * @bodyParam password string required Your current password. Example: yourpassword
+     *
+     * @response 200 { "message": "Account deleted successfully" }
+     * @response 401 scenario="Unauthenticated" { "message": "Unauthenticated." }
+     * @response 422 scenario="Wrong password" {
+     *   "message": "The password is incorrect.",
+     *   "errors": { "password": ["The password is incorrect."] }
+     * }
+     */
+    public function deleteAccount(DeleteAccountRequest $request): JsonResponse
+    {
+        $user = $request->user();
+
+        // Passport's oauth tables have no FK cascade to users — clean up
+        // the tokens explicitly so no orphaned rows are left behind.
+        $user->tokens()->delete();
+        $user->delete();
+
+        return response()->json(['message' => 'Account deleted successfully']);
     }
 
     /**

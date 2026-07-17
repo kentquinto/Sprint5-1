@@ -68,13 +68,21 @@ it('deletes the user\'s organized events with the account', function () {
         'game_id'     => $game->id,
     ]);
 
+    // Another player had joined the doomed event
+    $participant = User::factory()->create();
+    $event->participants()->attach($participant->id);
+
     $this->deleteJson('/api/me', [
         'password' => 'password',
     ], [
         'Authorization' => "Bearer {$this->token}",
     ])->assertStatus(200);
 
+    // The event is gone, and so are its participants' pivot rows —
+    // but the participants themselves still exist
     $this->assertDatabaseMissing('events', ['id' => $event->id]);
+    $this->assertDatabaseMissing('participants', ['event_id' => $event->id]);
+    $this->assertDatabaseHas('users', ['id' => $participant->id]);
 });
 
 it('removes the user\'s participations but keeps the joined events', function () {
@@ -114,4 +122,15 @@ it('token no longer works after the account is deleted', function () {
     $this->getJson('/api/me', [
         'Authorization' => "Bearer {$this->token}",
     ])->assertStatus(401);
+});
+
+it('deletes the user\'s tokens from the database with the account', function () {
+    $this->deleteJson('/api/me', [
+        'password' => 'password',
+    ], [
+        'Authorization' => "Bearer {$this->token}",
+    ])->assertStatus(200);
+
+    // No orphaned token rows are left behind
+    $this->assertDatabaseMissing('oauth_access_tokens', ['user_id' => $this->user->id]);
 });
