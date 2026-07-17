@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/Laravel-13-FF2D20?style=for-the-badge&logo=laravel&logoColor=white">
   <img src="https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php&logoColor=white">
   <img src="https://img.shields.io/badge/Passport-13-orange?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Tests-79%20passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Tests-87%20passing-brightgreen?style=for-the-badge">
 </p>
 
 ---
@@ -26,6 +26,7 @@ This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed
 
 - **Role-based access control** — two roles: `player` (join events) and `organizer` (create, edit, delete events)
 - **Bearer token authentication** via Laravel Passport (register, login, logout)
+- **Account management** — update profile, change password, delete account (with cascade cleanup)
 - **Event management** — organizers can create, update and delete their own tournaments; all users can browse
 - **Smart filtering** — filter events by game, status, price, date, location or search term
 - **Participant system** — players join and leave events with full business rule enforcement
@@ -44,7 +45,7 @@ This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed
 | Language | PHP 8.3+ |
 | Authentication | Laravel Passport 13 (OAuth2 Bearer tokens) |
 | Database | SQLite (local) · MySQL (production) |
-| Testing | Pest 4.7 — 79 tests, 239 assertions |
+| Testing | Pest 4.7 — 87 tests, 261 assertions |
 | Documentation | Scribe 5.11 |
 | Architecture | REST API, TDD |
 
@@ -184,6 +185,7 @@ php artisan scribe:generate
 | `GET` | `/api/me` | 🔒 | Get your own profile (includes `role`) |
 | `PUT` | `/api/me` | 🔒 | Update name, bio, country, favourite game |
 | `PUT` | `/api/me/password` | 🔒 | Change password (requires current password) |
+| `DELETE` | `/api/me` | 🔒 | Delete account permanently (requires password) |
 
 ### Events
 
@@ -331,8 +333,8 @@ php artisan test
 ```
 
 ```
-Tests:    79 passed
-Assertions: 239
+Tests:    87 passed
+Assertions: 261
 Duration:  ~1.5s
 ```
 
@@ -346,36 +348,41 @@ The test suite covers every endpoint including authentication, validation, autho
 app/
 ├── Http/
 │   ├── Controllers/Api/
-│   │   ├── AuthController.php        # register, login, me, update, logout
+│   │   ├── AuthController.php        # register, login, me, update, updatePassword, deleteAccount, logout
 │   │   ├── EventController.php       # index, show, store, update, destroy
 │   │   ├── ParticipantController.php # index, store (join), destroy (leave)
 │   │   ├── DashboardController.php   # organizedEvents, joinedEvents
-│   │   ├── PlayerController.php      # show (public profile)
+│   │   ├── PlayerController.php      # show (player profile)
 │   │   ├── GameController.php        # index
 │   │   └── StatisticsController.php  # players, games, organizers
+│   ├── Requests/                     # validation classes, one per endpoint with input
+│   │   ├── RegisterRequest.php · LoginRequest.php
+│   │   ├── UpdateProfileRequest.php · UpdatePasswordRequest.php · DeleteAccountRequest.php
+│   │   └── EventFilterRequest.php · StoreEventRequest.php · UpdateEventRequest.php
 │   └── Resources/
 │       ├── EventResource.php         # full event JSON shape (detailed)
 │       ├── EventSummaryResource.php  # event list shape (no description)
 │       ├── UserResource.php          # private profile shape
-│       ├── PublicProfileResource.php # public profile shape
+│       ├── PublicProfileResource.php # other players' profile shape
 │       ├── ParticipantResource.php   # participant shape
 │       └── GameResource.php          # game shape
 ├── Models/
-│   ├── Event.php     # belongsTo Game, User · belongsToMany participants
+│   ├── Event.php     # belongsTo Game, User · belongsToMany participants · filter scopes
 │   ├── User.php      # hasMany createdEvents · belongsToMany events
+│   ├── Participant.php # pivot model (used by seeders)
 │   └── Game.php      # hasMany events
 └── Policies/
-    └── EventPolicy.php  # update/delete: only the creator
+    └── EventPolicy.php  # create: organizers only · update/delete: only the creator
 
 database/
 ├── migrations/   # users, games, events, participants (pivot)
 └── seeders/      # 13 games + sample data
 
 routes/
-└── api.php       # 21 routes — public + auth:api protected group
+└── api.php       # 22 routes — public + auth:api protected group
 
 tests/Feature/Api/
-└── ...           # 79 Pest tests
+└── ...           # 87 Pest tests
 ```
 
 ---

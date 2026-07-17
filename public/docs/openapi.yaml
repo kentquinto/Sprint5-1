@@ -358,6 +358,75 @@ paths:
                   description: 'The ID of your favourite game (must exist in `/api/games`). Pass `null` to clear it.'
                   example: 1
                   nullable: true
+    delete:
+      summary: 'Delete your account.'
+      operationId: deleteYourAccount
+      description: "Permanently deletes the authenticated user's account. Requires the current\npassword for confirmation. Events you organized are deleted with the\naccount; your participations in other events are removed."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Account deleted successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'Account deleted successfully'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        422:
+          description: 'Wrong password'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The password is incorrect.'
+                  errors:
+                    password:
+                      - 'The password is incorrect.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The password is incorrect.'
+                  errors:
+                    type: object
+                    properties:
+                      password:
+                        type: array
+                        example:
+                          - 'The password is incorrect.'
+                        items:
+                          type: string
+      tags:
+        - Profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: 'Your current password.'
+                  example: yourpassword
+              required:
+                - password
   /api/me/password:
     put:
       summary: 'Update your password.'
@@ -660,7 +729,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: ongoing
+                  example: cancelled
                   enum:
                     - upcoming
                     - ongoing
@@ -676,7 +745,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-07-16T20:33:16'
+                  example: '2026-07-17T10:19:02'
                 search:
                   type: string
                   description: 'Must not be greater than 100 characters.'
