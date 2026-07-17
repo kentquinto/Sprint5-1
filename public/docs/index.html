@@ -1548,9 +1548,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"game\": 16,
-    \"status\": \"cancelled\",
+    \"status\": \"upcoming\",
     \"price\": \"free\",
-    \"date\": \"2026-07-17T10:19:02\",
+    \"date\": \"2026-07-17T10:37:23\",
     \"search\": \"n\",
     \"location\": \"g\"
 }"
@@ -1581,9 +1581,9 @@ const headers = {
 
 let body = {
     "game": 16,
-    "status": "cancelled",
+    "status": "upcoming",
     "price": "free",
-    "date": "2026-07-17T10:19:02",
+    "date": "2026-07-17T10:37:23",
     "search": "n",
     "location": "g"
 };
@@ -1814,10 +1814,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="GETapi-events"
-               value="cancelled"
+               value="upcoming"
                data-component="body">
     <br>
-<p>Example: <code>cancelled</code></p>
+<p>Example: <code>upcoming</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>upcoming</code></li> <li><code>ongoing</code></li> <li><code>finished</code></li> <li><code>cancelled</code></li></ul>
         </div>
@@ -1842,10 +1842,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="GETapi-events"
-               value="2026-07-17T10:19:02"
+               value="2026-07-17T10:37:23"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-07-17T10:19:02</code></p>
+<p>Must be a valid date. Example: <code>2026-07-17T10:37:23</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;

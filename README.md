@@ -348,7 +348,8 @@ The test suite covers every endpoint including authentication, validation, autho
 app/
 ├── Http/
 │   ├── Controllers/Api/
-│   │   ├── AuthController.php        # register, login, me, update, updatePassword, deleteAccount, logout
+│   │   ├── AuthController.php        # register, login, logout
+│   │   ├── ProfileController.php     # me, update, updatePassword, deleteAccount
 │   │   ├── EventController.php       # index, show, store, update, destroy
 │   │   ├── ParticipantController.php # index, store (join), destroy (leave)
 │   │   ├── DashboardController.php   # organizedEvents, joinedEvents
