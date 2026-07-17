@@ -37,4 +37,31 @@ class Event extends Model
     public function participants () {
         return $this->belongsToMany(User::class, 'participants');
     }
+
+    // ─── Query scopes (used by GET /api/events filters) ──────────────────────
+
+    public function scopeForGame($query, $gameId) {
+        $query->when($gameId, fn ($q) => $q->where('game_id', $gameId));
+    }
+
+    public function scopeSearch($query, $term) {
+        $query->when($term, fn ($q) => $q->where('title', 'like', "%{$term}%"));
+    }
+
+    public function scopeInLocation($query, $location) {
+        $query->when($location, fn ($q) => $q->where('location', 'like', "%{$location}%"));
+    }
+
+    public function scopeWithStatus($query, $status) {
+        $query->when($status, fn ($q) => $q->where('status', $status));
+    }
+
+    public function scopePriced($query, $price) {
+        $query->when($price === 'free', fn ($q) => $q->where('entry_fee', 0))
+              ->when($price === 'paid', fn ($q) => $q->where('entry_fee', '>', 0));
+    }
+
+    public function scopeOnDate($query, $date) {
+        $query->when($date, fn ($q) => $q->whereDate('date_time', $date));
+    }
 }

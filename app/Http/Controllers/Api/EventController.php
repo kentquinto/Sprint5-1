@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EventFilterRequest;
+use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\EventResource;
 use App\Http\Resources\EventSummaryResource;
 use App\Models\Event;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -48,26 +50,16 @@ class EventController extends Controller
      *   "meta": { "current_page": 1, "last_page": 1, "per_page": 20, "total": 1 }
      * }
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(EventFilterRequest $request): AnonymousResourceCollection
     {
-        $request->validate([
-            'game'     => 'sometimes|integer|exists:games,id',
-            'status'   => 'sometimes|in:upcoming,ongoing,finished,cancelled',
-            'price'    => 'sometimes|in:free,paid',
-            'date'     => 'sometimes|date',
-            'search'   => 'sometimes|string|max:100',
-            'location' => 'sometimes|string|max:100',
-        ]);
-
         $events = Event::with('game', 'creator')
             ->withCount('participants')
-            ->when($request->game,     fn($q) => $q->where('game_id', $request->game))
-            ->when($request->search,   fn($q) => $q->where('title', 'like', "%{$request->search}%"))
-            ->when($request->location, fn($q) => $q->where('location', 'like', "%{$request->location}%"))
-            ->when($request->status,   fn($q) => $q->where('status', $request->status))
-            ->when($request->price === 'free', fn($q) => $q->where('entry_fee', 0))
-            ->when($request->price === 'paid', fn($q) => $q->where('entry_fee', '>', 0))
-            ->when($request->date,     fn($q) => $q->whereDate('date_time', $request->date))
+            ->forGame($request->game)
+            ->search($request->search)
+            ->inLocation($request->location)
+            ->withStatus($request->status)
+            ->priced($request->price)
+            ->onDate($request->date)
             ->latest()
             ->paginate(20);
 
@@ -140,13 +132,9 @@ class EventController extends Controller
      *   "errors": { "title": ["The title field is required."] }
      * }
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreEventRequest $request): JsonResponse
     {
-        if ($request->user()->role !== 'organizer') {
-            return response()->json(['message' => 'Only organizers can create events.'], 403);
-        }
-
-        $request->validate($this->eventRules());
+        $this->authorize('create', Event::class);
 
         $event = Event::create([
             ...$request->only(['title', 'description', 'location', 'date_time', 'max_players', 'entry_fee', 'game_id']),
@@ -192,11 +180,9 @@ class EventController extends Controller
      * @response 403 scenario="Not the organizer" { "message": "This action is unauthorized." }
      * @response 404 scenario="Event not found" { "message": "Resource not found." }
      */
-    public function update(Request $request, Event $event): EventResource
+    public function update(UpdateEventRequest $request, Event $event): EventResource
     {
         $this->authorize('update', $event);
-
-        $request->validate($this->eventRules());
 
         $event->update($request->only(['title', 'description', 'location', 'date_time', 'max_players', 'entry_fee', 'game_id']));
 
@@ -224,19 +210,6 @@ class EventController extends Controller
         $event->delete();
 
         return response()->noContent();
-    }
-
-    private function eventRules(): array
-    {
-        return [
-            'title'       => 'required|string|max:45',
-            'description' => 'required|string|max:2000',
-            'location'    => 'nullable|string|max:45',
-            'date_time'   => 'required|date|after:now',
-            'max_players' => 'required|integer|min:2|max:100',
-            'entry_fee'   => 'required|numeric|min:0|max:999.99',
-            'game_id'     => 'required|exists:games,id',
-        ];
     }
 
     private function loadEvent(Event $event): Event

@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "TCG Manager API",
-        "_postman_id": "7c40bab8-fcd3-4705-86ef-6becc98679cd",
+        "_postman_id": "37021aa9-3337-4247-862a-5f71e92442c5",
         "description": "REST API for TCG Manager \u2014 a tournament management platform for Trading Card Game players and organizers. Supports event discovery, creation, and participation across 13 supported games including Pok\u00e9mon, Yu-Gi-Oh!, Magic: The Gathering, and more.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -229,6 +229,100 @@
                             "name": "Unauthenticated"
                         }
                     ]
+                },
+                {
+                    "name": "Update your password.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/me\/password",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/me\/password"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"current_password\":\"yourpassword\",\"password\":\"new-password-123\",\"password_confirmation\":\"new-password-123\"}"
+                        },
+                        "description": "Changes the authenticated user's password. Requires the current password\nfor confirmation. Existing tokens remain valid after the change."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{ \"message\": \"Password updated successfully\" }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{ \"message\": \"Unauthenticated.\" }",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"message\": \"The password is incorrect.\",\n  \"errors\": { \"current_password\": [\"The password is incorrect.\"] }\n}",
+                            "name": "Wrong current password"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete your account.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/me"
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"password\":\"yourpassword\"}"
+                        },
+                        "description": "Permanently deletes the authenticated user's account. Requires the current\npassword for confirmation. Events you organized are deleted with the\naccount; your participations in other events are removed."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{ \"message\": \"Account deleted successfully\" }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{ \"message\": \"Unauthenticated.\" }",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n  \"message\": \"The password is incorrect.\",\n  \"errors\": { \"password\": [\"The password is incorrect.\"] }\n}",
+                            "name": "Wrong password"
+                        }
+                    ]
                 }
             ]
         },
@@ -301,7 +395,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"game\":16,\"status\":\"cancelled\",\"price\":\"free\",\"date\":\"2026-07-08T08:48:49\",\"search\":\"n\",\"location\":\"g\"}"
+                            "raw": "{\"game\":16,\"status\":\"upcoming\",\"price\":\"free\",\"date\":\"2026-07-17T10:37:23\",\"search\":\"n\",\"location\":\"g\"}"
                         },
                         "description": "Returns a paginated list of all events (20 per page). Use the query parameters to filter the results.",
                         "auth": {
