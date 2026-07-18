@@ -3,7 +3,7 @@
 REST API for TCG Manager — a tournament management platform for Trading Card Game players and organizers. Supports event discovery, creation, and participation across 13 supported games including Pokémon, Yu-Gi-Oh!, Magic: The Gathering, and more.
 
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost:8000</code>
+    <strong>Base URL</strong>: shown in the example requests below for each endpoint.
 </aside>
 
 Welcome to the TCG Manager API. This API allows you to browse and manage trading card game tournaments.

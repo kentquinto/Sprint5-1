@@ -205,7 +205,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 17, 2026</li>
+        <li>Last updated: July 18, 2026</li>
     </ul>
 </div>
 
@@ -215,7 +215,7 @@
         <h1 id="introduction">Introduction</h1>
 <p>REST API for TCG Manager — a tournament management platform for Trading Card Game players and organizers. Supports event discovery, creation, and participation across 13 supported games including Pokémon, Yu-Gi-Oh!, Magic: The Gathering, and more.</p>
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost:8000</code>
+    <strong>Base URL</strong>: shown in the example requests below for each endpoint.
 </aside>
 <p>Welcome to the TCG Manager API. This API allows you to browse and manage trading card game tournaments.</p>
 <aside>Use the <b>Try It Out</b> button on any endpoint to test it directly from this page. For protected endpoints, click <b>Authorize</b> at the top and paste your Bearer token.</aside>
@@ -1548,9 +1548,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"game\": 16,
-    \"status\": \"upcoming\",
+    \"status\": \"finished\",
     \"price\": \"free\",
-    \"date\": \"2026-07-17T10:37:23\",
+    \"date\": \"2026-07-18T18:39:35\",
     \"search\": \"n\",
     \"location\": \"g\"
 }"
@@ -1581,9 +1581,9 @@ const headers = {
 
 let body = {
     "game": 16,
-    "status": "upcoming",
+    "status": "finished",
     "price": "free",
-    "date": "2026-07-17T10:37:23",
+    "date": "2026-07-18T18:39:35",
     "search": "n",
     "location": "g"
 };
@@ -1814,10 +1814,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="GETapi-events"
-               value="upcoming"
+               value="finished"
                data-component="body">
     <br>
-<p>Example: <code>upcoming</code></p>
+<p>Example: <code>finished</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>upcoming</code></li> <li><code>ongoing</code></li> <li><code>finished</code></li> <li><code>cancelled</code></li></ul>
         </div>
@@ -1842,10 +1842,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="GETapi-events"
-               value="2026-07-17T10:37:23"
+               value="2026-07-18T18:39:35"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-07-17T10:37:23</code></p>
+<p>Must be a valid date. Example: <code>2026-07-18T18:39:35</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
