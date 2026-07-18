@@ -729,7 +729,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: upcoming
+                  example: finished
                   enum:
                     - upcoming
                     - ongoing
@@ -745,7 +745,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-07-17T10:37:23'
+                  example: '2026-07-18T18:39:35'
                 search:
                   type: string
                   description: 'Must not be greater than 100 characters.'
