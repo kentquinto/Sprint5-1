@@ -44,7 +44,7 @@ This is a **Sprint 5 capstone project** built at IT Academy Barcelona, developed
 | Framework | Laravel 13 |
 | Language | PHP 8.3+ |
 | Authentication | Laravel Passport 13 (OAuth2 Bearer tokens) |
-| Database | SQLite (local) · MySQL (production) |
+| Database | SQLite (dev & demo deployment) · MySQL-ready via `.env` |
 | Testing | Pest 4.7 — 87 tests, 261 assertions |
 | Documentation | Scribe 5.11 |
 | Architecture | REST API, TDD |
