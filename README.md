@@ -12,6 +12,14 @@
   <img src="https://img.shields.io/badge/Tests-87%20passing-brightgreen?style=for-the-badge">
 </p>
 
+<p align="center">
+  🔗 <strong>Live API:</strong> <a href="https://tcgmanager-api.onrender.com/api/games">tcgmanager-api.onrender.com/api</a>
+  &nbsp;·&nbsp;
+  📖 <strong>Interactive docs:</strong> <a href="https://tcgmanager-api.onrender.com/docs">tcgmanager-api.onrender.com/docs</a>
+</p>
+
+> **Note:** the demo runs on Render's free tier — the first request after a period of inactivity takes up to a minute while the server wakes up. The demo database resets on every deploy, and the [seed credentials](#4--seed-credentials) below work as demo logins.
+
 ---
 
 ## What is this?
